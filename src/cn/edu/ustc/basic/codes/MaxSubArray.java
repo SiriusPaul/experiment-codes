@@ -6,7 +6,8 @@ package cn.edu.ustc.basic.codes;
  * @CreateDate 2025/3/9
  * @Description experiment 2
  */
-public class MaxSubArray {
+public class MaxSubArray implements Strategy{
+    @Override
     public MaxSubArrayResult calc(int[] arr) {
         // check input
         if (arr == null || arr.length == 0) {
