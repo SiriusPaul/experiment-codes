@@ -1,4 +1,4 @@
-package cn.edu.ustc.basic.codes;
+package cn.edu.ustc.model;
 
 /**
  * @author SiriusPaul

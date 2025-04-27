@@ -1,4 +1,6 @@
-package cn.edu.ustc.basic.codes;
+package cn.edu.ustc.service;
+
+import cn.edu.ustc.model.MaxSubArrayResult;
 
 /**
  * @author SiriusPaul

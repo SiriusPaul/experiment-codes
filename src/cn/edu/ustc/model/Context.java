@@ -1,4 +1,6 @@
-package cn.edu.ustc.basic.codes;
+package cn.edu.ustc.model;
+
+import cn.edu.ustc.service.Strategy;
 
 /**
  * @author SiriusPaul

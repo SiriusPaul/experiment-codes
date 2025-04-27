@@ -1,12 +1,15 @@
-package cn.edu.ustc.basic.codes;
+package cn.edu.ustc.algorithm;
+
+import cn.edu.ustc.model.MaxSubArrayResult;
+import cn.edu.ustc.service.Strategy;
 
 /**
  * @author SiriusPaul
  * @version V1.0
  * @CreateDate 2025/3/9
- * @Description experiment 2
+ * @Description using dynamic programming to solve the maximum subarray problem
  */
-public class MaxSubArray implements Strategy{
+public class DynamicProgrammingMaxSubArray implements Strategy {
     @Override
     public MaxSubArrayResult calc(int[] arr) {
         // check input
