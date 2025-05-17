@@ -8,7 +8,7 @@ import java.io.IOException;
  * \author SiriusPaul
  * \version V1.0
  * \CreateDate 2025/3/21
- * \Description
+ * \Description FileUtil class, used to read the input file
  */
 public class FileUtil {
     /**
@@ -62,7 +62,6 @@ public class FileUtil {
 
             // Parse the count of numbers
             try {
-                int count = Integer.parseInt(parts[0].trim());
                 // Split and parse the numbers
                 String[] numberStrings = parts[1].split(",");
                 int[] nums = new int[numberStrings.length];

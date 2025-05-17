@@ -12,7 +12,7 @@ import javafx.scene.text.FontWeight;
  * @author SiriusPaul
  * @version V1.0
  * @CreateDate 2025/3/28
- * @Description
+ * @Description 结果面板类，用于显示执行结果
  */
 
 public class ResultPanel extends VBox {

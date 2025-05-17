@@ -11,7 +11,7 @@ import javafx.scene.layout.VBox;
  * @author SiriusPaul
  * @version V1.0
  * @CreateDate 2025/3/28
- * @Description
+ * @Description 主视图类，负责显示问题选择器和问题面板
  */
 public class MainView extends BorderPane {
     private final ComboBox<ProblemType> problemSelector;
