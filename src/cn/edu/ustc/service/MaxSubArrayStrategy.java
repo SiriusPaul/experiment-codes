@@ -8,6 +8,6 @@ import cn.edu.ustc.model.MaxSubArrayResult;
  * @CreateDate 2025/3/14
  * @Description
  */
-public interface Strategy {
+public interface MaxSubArrayStrategy {
     MaxSubArrayResult calc(int[] arr);
 }

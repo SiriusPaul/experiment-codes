@@ -9,7 +9,7 @@ package cn.edu.ustc.model;
 
 public enum ProblemType {
     MAX_SUBARRAY("max-subarray", "最大子数组问题"),
-    PROBLEM_TWO("2","问题二（未实现）"),
+    PROBLEM_TWO("queens","八皇后问题"),
     PROBLEM_THREE("2","问题三（未实现）");
 
 

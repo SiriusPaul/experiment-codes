@@ -1,16 +1,12 @@
 package cn.edu.ustc.gui;
 
-import cn.edu.ustc.model.Context;
 import cn.edu.ustc.model.TestCase;
 import cn.edu.ustc.service.AlgorithmCodeService;
-import cn.edu.ustc.service.Strategy;
-import cn.edu.ustc.algorithm.EnumerationMaxSubArray;
-import cn.edu.ustc.algorithm.DynamicProgrammingMaxSubArray;
-import cn.edu.ustc.model.MaxSubArrayResult;
 import cn.edu.ustc.model.ProblemType;
 import cn.edu.ustc.service.TestCaseService;
 import cn.edu.ustc.util.RuntimeCompiler;
 import javafx.geometry.Insets;
+import javafx.geometry.Pos;
 import javafx.scene.control.*;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
@@ -56,6 +52,8 @@ public class ProblemPanel extends BorderPane {
     private Button runButton;
     private Button editButton;
     private Button reloadButton;
+    private Spinner<Integer> boardSizeSpinner;
+    private HBox queensOptionsBox;
 
     // 服务类
     private final AlgorithmCodeService codeService = new AlgorithmCodeService();
@@ -96,6 +94,17 @@ public class ProblemPanel extends BorderPane {
         editButton = new Button("编辑代码");
         reloadButton = new Button("重新加载");
         reloadButton.setDisable(true);
+
+        // 八皇后问题特定组件
+        boardSizeSpinner = new Spinner<>(new SpinnerValueFactory.IntegerSpinnerValueFactory(4, 12, 8));
+        boardSizeSpinner.setEditable(true);
+        boardSizeSpinner.setPrefWidth(80);
+
+        queensOptionsBox = new HBox(10);
+        queensOptionsBox.setPadding(new Insets(10));
+        queensOptionsBox.setAlignment(Pos.CENTER_LEFT);
+        queensOptionsBox.getChildren().addAll(new Label("棋盘大小:"), boardSizeSpinner);
+        queensOptionsBox.setVisible(false); // 默认隐藏
     }
 
     private void layoutComponents() {
@@ -116,6 +125,12 @@ public class ProblemPanel extends BorderPane {
         );
 
         setTop(controlBox);
+        setCenter(centerBox);
+
+        VBox topContainer = new VBox(5);
+        topContainer.getChildren().addAll(controlBox, queensOptionsBox);
+
+        setTop(topContainer);
         setCenter(centerBox);
     }
 
@@ -153,7 +168,18 @@ public class ProblemPanel extends BorderPane {
     public void switchProblem(ProblemType problem) {
         currentProblemId = problem.getId();
         loadAlgorithms();
-        loadTestCases();
+
+        // 根据问题类型显示特定组件
+        boolean isQueensProblem = "八皇后问题".equals(problem.getDisplayName()) ||
+                "queens".equals(problem.getId());
+
+        // 根据问题类型显示/隐藏控件
+        queensOptionsBox.setVisible(isQueensProblem);
+        testCaseSelector.setVisible(!isQueensProblem);
+
+        if (!isQueensProblem) {
+            loadTestCases();
+        }
     }
 
     private void loadAlgorithms() {
@@ -212,89 +238,165 @@ public class ProblemPanel extends BorderPane {
     private void compileAndRun() {
         try {
             String sourceCode = codeArea.getText();
-            if (sourceCode == null || sourceCode.trim().isEmpty() || currentClassName == null) {
+            if (sourceCode == null || sourceCode.trim().isEmpty()) {
                 resultArea.setText("没有可执行的代码");
                 return;
             }
 
-            // 获取测试用例
-            TestCase testCase = testCaseSelector.getValue();
-            if (testCase == null) {
-                resultArea.setText("请选择一个测试用例");
-                return;
-            }
+            // 判断是否是八皇后问题
+            boolean isQueensProblem = queensOptionsBox.isVisible();
 
-            resultArea.setText("正在编译...");
-
-            try {
-                // 添加时间戳创建唯一类名，避免类加载器缓存问题
-                String uniqueClassName = currentClassName + "_" + System.currentTimeMillis();
-                String fullClassName = "cn.edu.ustc.algorithm." + uniqueClassName;
-
-                // 修改源代码中的类名以匹配唯一类名
-                String modifiedSourceCode = sourceCode.replaceFirst(
-                        "class\\s+" + currentClassName,
-                        "class " + uniqueClassName
-                );
-
-                // 编译修改后的代码
-                Class<?> compiledClass = RuntimeCompiler.compileAndLoad(fullClassName, modifiedSourceCode);
-
-                // 执行代码
-                int[] inputArray = testCase.getInputArray();
-                Object instance = compiledClass.getDeclaredConstructor().newInstance();
-                Method calcMethod = compiledClass.getMethod("calc", int[].class);
-                Object resultObj = calcMethod.invoke(instance, (Object) inputArray);
-
-                // 提取数值结果
-                int numericResult;
-                if (resultObj != null) {
-                    if (resultObj instanceof Integer) {
-                        numericResult = (Integer) resultObj;
-                    } else {
-                        // 通过反射获取maxSum字段的值
-                        try {
-                            java.lang.reflect.Field field = resultObj.getClass().getDeclaredField("maxSum");
-                            field.setAccessible(true);
-                            numericResult = (Integer) field.get(resultObj);
-                            System.out.println("通过字段访问获取值: " + numericResult);
-                        } catch (Exception ex) {
-                            System.err.println("无法获取maxSum值: " + ex);
-                            // 表示获取失败
-                            numericResult = -1;
-                        }
-                    }
-                } else {
-                    numericResult = 0;
-                }
-
-
-                // 显示结果
-                StringBuilder resultText = new StringBuilder();
-                resultText.append("编译成功!\n");
-                resultText.append("测试用例: ").append(testCase.getName()).append("\n");
-                resultText.append("输入: ").append(Arrays.toString(inputArray)).append("\n");
-                resultText.append("执行结果: ").append(numericResult);
-
-                if (testCase.getExpectedOutput() != null && !testCase.getExpectedOutput().isEmpty()) {
-                    resultText.append("\n期望结果: ").append(testCase.getExpectedOutput());
-                    if (String.valueOf(numericResult).equals(testCase.getExpectedOutput())) {
-                        resultText.append("\n√ 结果匹配");
-                    } else {
-                        resultText.append("\n× 结果不匹配");
-                    }
-                }
-
-                resultArea.setText(resultText.toString());
-            } catch (Exception e) {
-                // 详细显示编译错误
-                resultArea.setText("错误: " + e.getMessage());
-                e.printStackTrace();
+            if (isQueensProblem) {
+                runQueensProblem();
+            } else {
+                runMaxSubarrayProblem(sourceCode);
             }
         } catch (Exception e) {
             resultArea.setText("执行错误: " + e.getMessage());
             e.printStackTrace();
         }
+    }
+
+    private void runMaxSubarrayProblem(String sourceCode) {
+        // 获取测试用例
+        TestCase testCase = testCaseSelector.getValue();
+        if (testCase == null) {
+            resultArea.setText("请选择一个测试用例");
+            return;
+        }
+
+        resultArea.setText("正在编译...");
+
+        try {
+            // 添加时间戳创建唯一类名，避免类加载器缓存问题
+            String uniqueClassName = currentClassName + "_" + System.currentTimeMillis();
+            String fullClassName = "cn.edu.ustc.algorithm." + uniqueClassName;
+
+            // 修改源代码中的类名以匹配唯一类名
+            String modifiedSourceCode = sourceCode.replaceFirst(
+                    "class\\s+" + currentClassName,
+                    "class " + uniqueClassName
+            );
+
+            // 编译修改后的代码
+            Class<?> compiledClass = RuntimeCompiler.compileAndLoad(fullClassName, modifiedSourceCode);
+
+            // 执行代码
+            int[] inputArray = testCase.getInputArray();
+            Object instance = compiledClass.getDeclaredConstructor().newInstance();
+            Method calcMethod = compiledClass.getMethod("calc", int[].class);
+            Object resultObj = calcMethod.invoke(instance, (Object) inputArray);
+
+            // 提取数值结果
+            int numericResult = extractNumericResult(resultObj);
+
+            // 显示结果
+            displayMaxSubarrayResult(testCase, inputArray, numericResult);
+        } catch (Exception e) {
+            // 详细显示编译错误
+            resultArea.setText("错误: " + e.getMessage());
+            e.printStackTrace();
+        }
+    }
+
+    private int extractNumericResult(Object resultObj) {
+        if (resultObj == null) return 0;
+
+        if (resultObj instanceof Integer) {
+            return (Integer) resultObj;
+        }
+
+        // 通过反射获取maxSum字段的值
+        try {
+            java.lang.reflect.Field field = resultObj.getClass().getDeclaredField("maxSum");
+            field.setAccessible(true);
+            return (Integer) field.get(resultObj);
+        } catch (Exception ex) {
+            System.err.println("无法获取maxSum值: " + ex);
+            return -1; // 表示获取失败
+        }
+    }
+
+    private void displayMaxSubarrayResult(TestCase testCase, int[] inputArray, int result) {
+        StringBuilder resultText = new StringBuilder();
+        resultText.append("编译成功!\n");
+        resultText.append("测试用例: ").append(testCase.getName()).append("\n");
+        resultText.append("输入: ").append(Arrays.toString(inputArray)).append("\n");
+        resultText.append("执行结果: ").append(result);
+
+        if (testCase.getExpectedOutput() != null && !testCase.getExpectedOutput().isEmpty()) {
+            resultText.append("\n期望结果: ").append(testCase.getExpectedOutput());
+            if (String.valueOf(result).equals(testCase.getExpectedOutput())) {
+                resultText.append("\n√ 结果匹配");
+            } else {
+                resultText.append("\n× 结果不匹配");
+            }
+        }
+
+        resultArea.setText(resultText.toString());
+    }
+
+    private void runQueensProblem() {
+        String selectedAlgo = algorithmSelector.getValue();
+        if (selectedAlgo == null) {
+            resultArea.setText("请选择一个算法");
+            return;
+        }
+
+        int boardSize = boardSizeSpinner.getValue();
+        resultArea.setText("正在计算...");
+
+        try {
+            // 根据算法名称选择策略
+            cn.edu.ustc.service.QueensStrategy strategy;
+            if ("回溯法".equals(selectedAlgo)) {
+                strategy = new cn.edu.ustc.algorithm.BacktrackingQueens();
+            } else if ("最小冲突法".equals(selectedAlgo)) {
+                strategy = new cn.edu.ustc.algorithm.MinConflictsQueens();
+            } else {
+                resultArea.setText("未知算法: " + selectedAlgo);
+                return;
+            }
+
+            // 执行算法并获取结果
+            cn.edu.ustc.model.QueensSolutionResult result = strategy.solve(boardSize);
+
+            // 显示结果
+            displayQueensSolutions(result);
+        } catch (Exception e) {
+            resultArea.setText("计算错误: " + e.getMessage());
+            e.printStackTrace();
+        }
+    }
+
+    private void displayQueensSolutions(cn.edu.ustc.model.QueensSolutionResult result) {
+        StringBuilder output = new StringBuilder();
+        List<int[]> solutions = result.getSolutions();
+
+        output.append("找到 ").append(solutions.size()).append(" 个解决方案\n\n");
+
+        // 限制显示前5个解决方案
+        int displayCount = Math.min(10, solutions.size());
+
+        for (int i = 0; i < displayCount; i++) {
+            int[] solution = solutions.get(i);
+            output.append("方案 ").append(i + 1).append(":\n");
+
+            // 显示棋盘
+            for (int row = 0; row < solution.length; row++) {
+                for (int col = 0; col < solution.length; col++) {
+                    output.append(solution[row] == col ? "Q " : ". ");
+                }
+                output.append("\n");
+            }
+            output.append("\n");
+        }
+
+        if (solutions.size() > displayCount) {
+            output.append("... 还有 ").append(solutions.size() - displayCount).append(" 个解决方案未显示");
+        }
+
+        resultArea.setText(output.toString());
     }
 
     private void showAlert(String message) {

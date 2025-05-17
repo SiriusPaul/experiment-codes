@@ -7,26 +7,18 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="801b9ca9-dfd1-4a38-8717-d8386e05d69d" name="更改" comment="第九次课，含UI界面，算法没写完">
-      <change afterPath="$PROJECT_DIR$/.idea/.gitignore" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/dataSources.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/bin.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/mysql_connector_j_9_3_0.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/sqldialects.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lib/config.ini" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/cn/edu/ustc/model/TestCase.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/cn/edu/ustc/service/AlgorithmCodeService.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/cn/edu/ustc/service/TestCaseService.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/cn/edu/ustc/util/DatabaseManager.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/cn/edu/ustc/util/RuntimeCompiler.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/encodings.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/encodings.xml" afterDir="false" />
+    <list default="true" id="801b9ca9-dfd1-4a38-8717-d8386e05d69d" name="更改" comment="重构了界面，只保留了problem panel，这样可以利用反射机制实现实时编译，（注意由于JVM的类加载机制，重新编译代码JVM会使用之前加载的类，且不能加载同名类，因此这里利用时间戳为每次编译都修改源代码的类名，使其唯一）">
+      <change afterPath="$PROJECT_DIR$/src/cn/edu/ustc/algorithm/BacktrackingQueens.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/cn/edu/ustc/algorithm/MinConflictsQueens.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/cn/edu/ustc/model/QueensSolutionResult.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/cn/edu/ustc/service/QueensStrategy.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/experiment-codes.iml" beforeDir="false" afterPath="$PROJECT_DIR$/experiment-codes.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/cn/edu/ustc/gui/MainView.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/cn/edu/ustc/gui/MainView.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/cn/edu/ustc/algorithm/DynamicProgrammingMaxSubArray.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/cn/edu/ustc/algorithm/DynamicProgrammingMaxSubArray.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/cn/edu/ustc/algorithm/EnumerationMaxSubArray.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/cn/edu/ustc/algorithm/EnumerationMaxSubArray.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/cn/edu/ustc/gui/ProblemPanel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/cn/edu/ustc/gui/ProblemPanel.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/cn/edu/ustc/gui/ResultPanel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/cn/edu/ustc/gui/ResultPanel.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/cn/edu/ustc/model/Context.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/cn/edu/ustc/model/Context.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/cn/edu/ustc/model/ProblemType.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/cn/edu/ustc/model/ProblemType.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/cn/edu/ustc/util/FileUtil.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/cn/edu/ustc/util/FileUtil.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/cn/edu/ustc/service/Strategy.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/cn/edu/ustc/service/MaxSubArrayStrategy.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -188,7 +180,7 @@
       <workItem from="1745754527073" duration="4345000" />
       <workItem from="1746878141256" duration="4979000" />
       <workItem from="1747412594557" duration="14923000" />
-      <workItem from="1747477636158" duration="2728000" />
+      <workItem from="1747477636158" duration="8975000" />
     </task>
     <task id="LOCAL-00001" summary="第一次实验课，完整可运行代码">
       <option name="closed" value="true" />
@@ -214,7 +206,15 @@
       <option name="project" value="LOCAL" />
       <updated>1745756568219</updated>
     </task>
-    <option name="localTasksCounter" value="4" />
+    <task id="LOCAL-00004" summary="重构了界面，只保留了problem panel，这样可以利用反射机制实现实时编译，（注意由于JVM的类加载机制，重新编译代码JVM会使用之前加载的类，且不能加载同名类，因此这里利用时间戳为每次编译都修改源代码的类名，使其唯一）">
+      <option name="closed" value="true" />
+      <created>1747486204751</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1747486204751</updated>
+    </task>
+    <option name="localTasksCounter" value="5" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -293,7 +293,8 @@
   <component name="VcsManagerConfiguration">
     <MESSAGE value="第一次实验课，完整可运行代码" />
     <MESSAGE value="第九次课，含UI界面，算法没写完" />
-    <option name="LAST_COMMIT_MESSAGE" value="第九次课，含UI界面，算法没写完" />
+    <MESSAGE value="重构了界面，只保留了problem panel，这样可以利用反射机制实现实时编译，（注意由于JVM的类加载机制，重新编译代码JVM会使用之前加载的类，且不能加载同名类，因此这里利用时间戳为每次编译都修改源代码的类名，使其唯一）" />
+    <option name="LAST_COMMIT_MESSAGE" value="重构了界面，只保留了problem panel，这样可以利用反射机制实现实时编译，（注意由于JVM的类加载机制，重新编译代码JVM会使用之前加载的类，且不能加载同名类，因此这里利用时间戳为每次编译都修改源代码的类名，使其唯一）" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />

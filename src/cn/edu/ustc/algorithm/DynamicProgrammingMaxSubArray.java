@@ -1,7 +1,7 @@
 package cn.edu.ustc.algorithm;
 
 import cn.edu.ustc.model.MaxSubArrayResult;
-import cn.edu.ustc.service.Strategy;
+import cn.edu.ustc.service.MaxSubArrayStrategy;
 
 /**
  * @author SiriusPaul
@@ -9,7 +9,7 @@ import cn.edu.ustc.service.Strategy;
  * @CreateDate 2025/3/9
  * @Description using dynamic programming to solve the maximum subarray problem
  */
-public class DynamicProgrammingMaxSubArray implements Strategy {
+public class DynamicProgrammingMaxSubArray implements MaxSubArrayStrategy {
     @Override
     public MaxSubArrayResult calc(int[] arr) {
         // check input
