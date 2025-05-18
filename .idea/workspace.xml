@@ -1,51 +1,24 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
-  <component name="AnalysisUIOptions">
-    <option name="GROUP_BY_SEVERITY" value="true" />
-  </component>
   <component name="AutoImportSettings">
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="801b9ca9-dfd1-4a38-8717-d8386e05d69d" name="更改" comment="第一次实验课，完整可运行代码">
-      <change afterPath="$PROJECT_DIR$/src/cn/edu/ustc/algorithm/EnumerationMaxSubArray.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/cn/edu/ustc/app/AlgorithmApp.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/cn/edu/ustc/gui/CodePanel.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/cn/edu/ustc/gui/InputPanel.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/cn/edu/ustc/gui/MainView.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/cn/edu/ustc/gui/ProblemPanel.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/cn/edu/ustc/gui/ResultPanel.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/cn/edu/ustc/model/ProblemType.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/cn/edu/ustc/util/FileUtil.java" afterDir="false" />
+    <list default="true" id="d384124b-d053-403f-a959-3b81c6add41e" name="更改" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/encodings.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/encodings.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/shelf/___.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/shelf/在变基之前未提交的更改_[更改]/shelved.patch" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/experiment-codes.iml" beforeDir="false" afterPath="$PROJECT_DIR$/experiment-codes.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/cn/edu/ustc/basic/codes/Context.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/cn/edu/ustc/model/Context.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/cn/edu/ustc/basic/codes/Ex1_MaxSubArray.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/cn/edu/ustc/basic/codes/MaxSubArray.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/cn/edu/ustc/algorithm/DynamicProgrammingMaxSubArray.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/cn/edu/ustc/basic/codes/MaxSubArrayResult.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/cn/edu/ustc/model/MaxSubArrayResult.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/cn/edu/ustc/basic/codes/MaxSubArrayTest.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/cn/edu/ustc/basic/codes/Strategy.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/cn/edu/ustc/service/Strategy.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/cn/edu/ustc/gui/MainView.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/cn/edu/ustc/gui/MainView.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
-  <component name="FileTemplateManagerImpl">
-    <option name="RECENT_TEMPLATES">
-      <list>
-        <option value="Interface" />
-        <option value="Class" />
-      </list>
-    </option>
-  </component>
   <component name="Git.Settings">
     <option name="RECENT_BRANCH_BY_REPOSITORY">
       <map>
-        <entry key="$PROJECT_DIR$" value="experiment2" />
+        <entry key="$PROJECT_DIR$" value="main" />
       </map>
     </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -58,27 +31,23 @@
 }</component>
   <component name="GithubPullRequestsUISettings">{
   &quot;selectedUrlAndAccountId&quot;: {
-    &quot;url&quot;: &quot;git@github.com:SiriusPaul/experiment-codes.git&quot;,
+    &quot;url&quot;: &quot;https://github.com/SiriusPaul/experiment-codes.git&quot;,
     &quot;accountId&quot;: &quot;1dc9fc94-1fc9-4b69-93fd-9ba20620e237&quot;
   }
 }</component>
   <component name="ProjectColorInfo">{
-  &quot;associatedIndex&quot;: 8
+  &quot;associatedIndex&quot;: 2
 }</component>
-  <component name="ProjectId" id="2u2LSrZ4A0m0ZdqhzE08OGRb6MG" />
-  <component name="ProjectLevelVcsManager" settingsEditedManually="true">
-    <ConfirmationsSetting value="2" id="Add" />
-  </component>
+  <component name="ProjectId" id="2xGmUzojNzJv6307za3N5hVbO2Z" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
-    "ASKED_SHARE_PROJECT_CONFIGURATION_FILES": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "RunOnceActivity.git.unshallow": "true",
-    "SONARLINT_PRECOMMIT_ANALYSIS": "true",
     "git-widget-placeholder": "reflection",
     "ignore.virus.scanning.warn.message": "true",
     "kotlin-language-version-configured": "true",
@@ -89,71 +58,22 @@
     "node.js.selected.package.tslint": "(autodetect)",
     "nodejs_package_manager_path": "npm",
     "project.structure.last.edited": "库",
-    "project.structure.proportion": "0.15",
-    "project.structure.side.proportion": "0.2",
-    "settings.editor.selected.configurable": "project.propCompiler",
+    "project.structure.proportion": "0.0",
+    "project.structure.side.proportion": "0.0",
+    "settings.editor.selected.configurable": "preferences.updates",
     "vue.rearranger.settings.migration": "true",
-    "应用程序.AlgorithmApp.executor": "Run",
-    "应用程序.Ex1_MaxSubArray.executor": "Run",
-    "应用程序.MaxSubArrayTest.executor": "Run"
+    "应用程序.se.executor": "Run"
   }
 }]]></component>
-  <component name="RunManager" selected="应用程序.AlgorithmApp">
-    <configuration name="AlgorithmApp" type="Application" factoryName="Application" nameIsGenerated="true">
-      <option name="ALTERNATIVE_JRE_PATH" value="23" />
-      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="true" />
+  <component name="RunManager">
+    <configuration name="se" type="Application" factoryName="Application">
       <option name="MAIN_CLASS_NAME" value="cn.edu.ustc.app.AlgorithmApp" />
       <module name="experiment-codes" />
       <option name="VM_PARAMETERS" value="--module-path &quot;D:\Programs\openjfx-23.0.2_windows-x64_bin-sdk\javafx-sdk-23.0.2\lib&quot; --add-modules javafx.controls,javafx.fxml" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="cn.edu.ustc.app.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="Ex1_MaxSubArray" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="cn.edu.ustc.basic.codes.Ex1_MaxSubArray" />
-      <module name="experiment-codes" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="cn.edu.ustc.basic.codes.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="MaxSubArrayTest" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="cn.edu.ustc.basic.codes.MaxSubArrayTest" />
-      <module name="experiment-codes" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="cn.edu.ustc.basic.codes.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <list>
-      <item itemvalue="应用程序.AlgorithmApp" />
-      <item itemvalue="应用程序.Ex1_MaxSubArray" />
-      <item itemvalue="应用程序.MaxSubArrayTest" />
-    </list>
-    <recent_temporary>
-      <list>
-        <item itemvalue="应用程序.MaxSubArrayTest" />
-        <item itemvalue="应用程序.Ex1_MaxSubArray" />
-        <item itemvalue="应用程序.MaxSubArrayTest" />
-        <item itemvalue="应用程序.Ex1_MaxSubArray" />
-      </list>
-    </recent_temporary>
   </component>
   <component name="SharedIndexes">
     <attachedChunks>
@@ -166,120 +86,28 @@
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="应用程序级" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
     <task active="true" id="Default" summary="默认任务">
-      <changelist id="801b9ca9-dfd1-4a38-8717-d8386e05d69d" name="更改" comment="" />
+      <changelist id="d384124b-d053-403f-a959-3b81c6add41e" name="更改" comment="" />
       <created>1737362720435</created>
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1737362720435</updated>
-      <workItem from="1741441729712" duration="1730000" />
-      <workItem from="1741511449250" duration="86000" />
-      <workItem from="1741511550550" duration="564000" />
-      <workItem from="1741512134210" duration="30000" />
-      <workItem from="1741512171594" duration="64000" />
-      <workItem from="1741512252710" duration="2063000" />
-      <workItem from="1741514747445" duration="2723000" />
-      <workItem from="1741685113224" duration="5863000" />
-      <workItem from="1741948907121" duration="2527000" />
-      <workItem from="1745754527073" duration="1818000" />
+      <workItem from="1747572804920" duration="522000" />
+      <workItem from="1747573365707" duration="1981000" />
     </task>
-    <task id="LOCAL-00001" summary="第一次实验课，完整可运行代码">
-      <option name="closed" value="true" />
-      <created>1741694092056</created>
-      <option name="number" value="00001" />
-      <option name="presentableId" value="LOCAL-00001" />
-      <option name="project" value="LOCAL" />
-      <updated>1741694092056</updated>
-    </task>
-    <task id="LOCAL-00002" summary="第一次实验课，完整可运行代码">
-      <option name="closed" value="true" />
-      <created>1741694206152</created>
-      <option name="number" value="00002" />
-      <option name="presentableId" value="LOCAL-00002" />
-      <option name="project" value="LOCAL" />
-      <updated>1741694206152</updated>
-    </task>
-    <option name="localTasksCounter" value="3" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
-    <option name="OPEN_GENERIC_TABS">
-      <map>
-        <entry key="4cb31674-6429-4aef-9fe1-55501098da77" value="TOOL_WINDOW" />
-      </map>
-    </option>
-    <option name="RECENT_FILTERS">
-      <map>
-        <entry key="Branch">
-          <value>
-            <list>
-              <RecentGroup>
-                <option name="FILTER_VALUES">
-                  <option value="origin/main" />
-                </option>
-              </RecentGroup>
-              <RecentGroup>
-                <option name="FILTER_VALUES">
-                  <option value="main" />
-                </option>
-              </RecentGroup>
-            </list>
-          </value>
-        </entry>
-      </map>
-    </option>
     <option name="TAB_STATES">
       <map>
-        <entry key="4cb31674-6429-4aef-9fe1-55501098da77">
-          <value>
-            <State>
-              <option name="CUSTOM_BOOLEAN_PROPERTIES">
-                <map>
-                  <entry key="Show.Git.Branches" value="true" />
-                </map>
-              </option>
-              <option name="FILTERS">
-                <map>
-                  <entry key="branch">
-                    <value>
-                      <list>
-                        <option value="origin/reflection" />
-                      </list>
-                    </value>
-                  </entry>
-                </map>
-              </option>
-            </State>
-          </value>
-        </entry>
         <entry key="MAIN">
           <value>
-            <State>
-              <option name="FILTERS">
-                <map>
-                  <entry key="branch">
-                    <value>
-                      <list>
-                        <option value="experiment1" />
-                      </list>
-                    </value>
-                  </entry>
-                </map>
-              </option>
-            </State>
+            <State />
           </value>
         </entry>
       </map>
     </option>
-  </component>
-  <component name="VcsManagerConfiguration">
-    <MESSAGE value="第一次实验课，完整可运行代码" />
-    <option name="LAST_COMMIT_MESSAGE" value="第一次实验课，完整可运行代码" />
-  </component>
-  <component name="XSLT-Support.FileAssociations.UIState">
-    <expand />
-    <select />
   </component>
 </project>
