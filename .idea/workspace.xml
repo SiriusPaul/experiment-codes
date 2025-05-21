@@ -7,18 +7,21 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="801b9ca9-dfd1-4a38-8717-d8386e05d69d" name="更改" comment="重构了界面，只保留了problem panel，这样可以利用反射机制实现实时编译，（注意由于JVM的类加载机制，重新编译代码JVM会使用之前加载的类，且不能加载同名类，因此这里利用时间戳为每次编译都修改源代码的类名，使其唯一）">
-      <change afterPath="$PROJECT_DIR$/src/cn/edu/ustc/algorithm/BacktrackingQueens.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/cn/edu/ustc/algorithm/MinConflictsQueens.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/cn/edu/ustc/model/QueensSolutionResult.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/cn/edu/ustc/service/QueensStrategy.java" afterDir="false" />
+    <list default="true" id="801b9ca9-dfd1-4a38-8717-d8386e05d69d" name="更改" comment="添加了八皇后问题的算法、接口和结果，重构了problem panel，把运行组件独立为方法。">
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/lib.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/cn/edu/ustc/algorithm/BoyerMooreStringMatcher.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/cn/edu/ustc/algorithm/EnumerationStringMatcher.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/cn/edu/ustc/algorithm/KMPStringMatcher.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/cn/edu/ustc/gui/StringMatchPanel.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/cn/edu/ustc/model/StringMatchResult.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/cn/edu/ustc/model/StringMatchTestCase.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/cn/edu/ustc/util/AlgorithmTimer.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/encodings.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/encodings.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/sqldialects.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/sqldialects.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/cn/edu/ustc/algorithm/DynamicProgrammingMaxSubArray.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/cn/edu/ustc/algorithm/DynamicProgrammingMaxSubArray.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/cn/edu/ustc/algorithm/EnumerationMaxSubArray.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/cn/edu/ustc/algorithm/EnumerationMaxSubArray.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/cn/edu/ustc/gui/ProblemPanel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/cn/edu/ustc/gui/ProblemPanel.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/cn/edu/ustc/model/Context.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/cn/edu/ustc/model/Context.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/cn/edu/ustc/model/ProblemType.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/cn/edu/ustc/model/ProblemType.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/cn/edu/ustc/service/Strategy.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/cn/edu/ustc/service/MaxSubArrayStrategy.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/cn/edu/ustc/service/TestCaseService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/cn/edu/ustc/service/TestCaseService.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -36,7 +39,7 @@
   <component name="Git.Settings">
     <option name="RECENT_BRANCH_BY_REPOSITORY">
       <map>
-        <entry key="$PROJECT_DIR$" value="experiment2" />
+        <entry key="$PROJECT_DIR$" value="se" />
       </map>
     </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -64,50 +67,43 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;ASKED_SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
-    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
-    &quot;SONARLINT_PRECOMMIT_ANALYSIS&quot;: &quot;true&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;reflection&quot;,
-    &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
-    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
-    &quot;last_opened_file_path&quot;: &quot;D:/Programs/mysql-connector-j-9.3.0/mysql-connector-j-9.3.0.jar&quot;,
-    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
-    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
-    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
-    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
-    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
-    &quot;project.structure.last.edited&quot;: &quot;库&quot;,
-    &quot;project.structure.proportion&quot;: &quot;0.15&quot;,
-    &quot;project.structure.side.proportion&quot;: &quot;0.2&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;http.proxy&quot;,
-    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;,
-    &quot;应用程序.AlgorithmApp.executor&quot;: &quot;Run&quot;,
-    &quot;应用程序.Ex1_MaxSubArray.executor&quot;: &quot;Run&quot;,
-    &quot;应用程序.MaxSubArrayTest.executor&quot;: &quot;Run&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "ASKED_SHARE_PROJECT_CONFIGURATION_FILES": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.git.unshallow": "true",
+    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
+    "SONARLINT_PRECOMMIT_ANALYSIS": "true",
+    "git-widget-placeholder": "reflection",
+    "ignore.virus.scanning.warn.message": "true",
+    "kotlin-language-version-configured": "true",
+    "last_opened_file_path": "C:/Users/18259/IdeaProjects/experiment-codes se",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "project.structure.last.edited": "库",
+    "project.structure.proportion": "0.15",
+    "project.structure.side.proportion": "0.2",
+    "settings.editor.selected.configurable": "http.proxy",
+    "vue.rearranger.settings.migration": "true",
+    "应用程序.AlgorithmApp.executor": "Run",
+    "应用程序.Ex1_MaxSubArray.executor": "Run",
+    "应用程序.MaxSubArrayTest.executor": "Run",
+    "应用程序.未命名.executor": "Run"
   },
-  &quot;keyToStringList&quot;: {
-    &quot;DatabaseDriversLRU&quot;: [
-      &quot;mysql_aurora&quot;
+  "keyToStringList": {
+    "DatabaseDriversLRU": [
+      "mysql_aurora"
     ]
   }
-}</component>
+}]]></component>
   <component name="RunManager" selected="应用程序.AlgorithmApp">
     <configuration name="AlgorithmApp" type="Application" factoryName="Application" nameIsGenerated="true">
-      <option name="ALTERNATIVE_JRE_PATH" value="23" />
-      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="true" />
       <option name="MAIN_CLASS_NAME" value="cn.edu.ustc.app.AlgorithmApp" />
       <module name="experiment-codes" />
       <option name="VM_PARAMETERS" value="--module-path &quot;D:\Programs\openjfx-23.0.2_windows-x64_bin-sdk\javafx-sdk-23.0.2\lib&quot; --add-modules javafx.controls,javafx.fxml" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="cn.edu.ustc.app.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
@@ -149,6 +145,7 @@
         <item itemvalue="应用程序.Ex1_MaxSubArray" />
         <item itemvalue="应用程序.MaxSubArrayTest" />
         <item itemvalue="应用程序.Ex1_MaxSubArray" />
+        <item itemvalue="应用程序.MaxSubArrayTest" />
       </list>
     </recent_temporary>
   </component>
@@ -181,6 +178,8 @@
       <workItem from="1746878141256" duration="4979000" />
       <workItem from="1747412594557" duration="14923000" />
       <workItem from="1747477636158" duration="8975000" />
+      <workItem from="1747629327906" duration="611000" />
+      <workItem from="1747662021866" duration="34895000" />
     </task>
     <task id="LOCAL-00001" summary="第一次实验课，完整可运行代码">
       <option name="closed" value="true" />

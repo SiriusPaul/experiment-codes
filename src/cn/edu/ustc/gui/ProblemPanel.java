@@ -1,5 +1,6 @@
 package cn.edu.ustc.gui;
 
+import cn.edu.ustc.model.StringMatchTestCase;
 import cn.edu.ustc.model.TestCase;
 import cn.edu.ustc.service.AlgorithmCodeService;
 import cn.edu.ustc.model.ProblemType;
@@ -54,6 +55,8 @@ public class ProblemPanel extends BorderPane {
     private Button reloadButton;
     private Spinner<Integer> boardSizeSpinner;
     private HBox queensOptionsBox;
+    private StringMatchPanel stringMatchPanel;
+    private VBox centerBox;
 
     // 服务类
     private final AlgorithmCodeService codeService = new AlgorithmCodeService();
@@ -64,6 +67,19 @@ public class ProblemPanel extends BorderPane {
     private String currentClassName;
     private String originalCode;
     private List<TestCase> testCases;
+
+    // 新增字符串匹配输入区域
+    private TextField textField;
+    private TextField patternField;
+    private HBox stringMatchInputBox;
+
+    //自定义测试样例功能
+    private CheckBox useCustomTestCheckbox;
+    private TextField customArrayField;
+    private HBox customMaxSubarrayBox;
+
+    // 追踪执行时间
+
 
     public ProblemPanel() {
         initComponents();
@@ -84,11 +100,11 @@ public class ProblemPanel extends BorderPane {
         codeArea = new TextArea();
         codeArea.setStyle("-fx-font-family: monospace;");
         codeArea.setEditable(false);
-        codeArea.setPrefHeight(400);
+        codeArea.setPrefHeight(300);
 
         resultArea = new TextArea();
         resultArea.setEditable(false);
-        resultArea.setPrefHeight(120);
+        resultArea.setPrefHeight(150);
 
         runButton = new Button("编译运行");
         editButton = new Button("编辑代码");
@@ -104,7 +120,56 @@ public class ProblemPanel extends BorderPane {
         queensOptionsBox.setPadding(new Insets(10));
         queensOptionsBox.setAlignment(Pos.CENTER_LEFT);
         queensOptionsBox.getChildren().addAll(new Label("棋盘大小:"), boardSizeSpinner);
-        queensOptionsBox.setVisible(false); // 默认隐藏
+        queensOptionsBox.setVisible(false);
+
+        // 字符串匹配问题特定组件
+        stringMatchPanel = new StringMatchPanel();
+        stringMatchPanel.setVisible(false);
+        stringMatchPanel.setAlignment(Pos.CENTER_LEFT);
+
+        // 初始化字符串匹配相关组件
+        // 初始化字符串匹配相关组件
+        textField = new TextField();
+        textField.setPrefWidth(400);
+        textField.setPrefHeight(25);  // Set explicit height
+        patternField = new TextField();
+        patternField.setPrefHeight(25);  // Set explicit height
+
+        Button runStringMatchButton = new Button("运行匹配");
+        runStringMatchButton.setOnAction(e -> runProblem());
+
+        stringMatchInputBox = new HBox(10);
+        stringMatchInputBox.setPadding(new Insets(10));
+        stringMatchInputBox.setAlignment(Pos.CENTER_LEFT);
+        stringMatchInputBox.getChildren().addAll(
+                new Label("文本:"), textField,
+                new Label("模式:"), patternField,
+                runStringMatchButton
+        );
+        stringMatchInputBox.setVisible(false);
+
+        // 自定义测试样例组件
+        useCustomTestCheckbox = new CheckBox("自定义测试");
+        HBox customTestBox = new HBox(10);
+        customTestBox.setPadding(new Insets(0, 10, 5, 10));
+        customTestBox.setAlignment(Pos.CENTER_LEFT);
+        customTestBox.getChildren().add(useCustomTestCheckbox);
+
+        customArrayField = new TextField();
+        customArrayField.setPromptText("输入数组，例如：-2,1,-3,4,-1,2,1,-5,4");
+        customArrayField.setPrefWidth(300);
+        customArrayField.setPrefHeight(25);
+        // 自定义测试样例组件
+//        useCustomTestCheckbox = new CheckBox("自定义测试");
+//        customArrayField = new TextField();
+//        customArrayField.setPromptText("输入数组，例如：-2,1,-3,4,-1,2,1,-5,4");
+//        customArrayField.setPrefWidth(300);
+
+        //最大子数组自定义测试区域
+        customMaxSubarrayBox = new HBox(10);
+        customMaxSubarrayBox.setPadding(new Insets(5));
+        customMaxSubarrayBox.setAlignment(Pos.CENTER_LEFT);
+        customMaxSubarrayBox.getChildren().addAll(new Label("数组:"), customArrayField);
     }
 
     private void layoutComponents() {
@@ -117,27 +182,66 @@ public class ProblemPanel extends BorderPane {
                 runButton, editButton, reloadButton
         );
 
-        VBox centerBox = new VBox(10);
+        // 创建单独的复选框容器
+        HBox customTestBox = new HBox(10);
+        customTestBox.setPadding(new Insets(0, 10, 5, 10));
+        customTestBox.setAlignment(Pos.CENTER_LEFT);
+        customTestBox.getChildren().add(useCustomTestCheckbox);
+
+        // 确保字符串匹配输入和最大子数组输入一致的布局
+        stringMatchInputBox = new HBox(10);
+        stringMatchInputBox.setPadding(new Insets(5));
+        stringMatchInputBox.setAlignment(Pos.CENTER_LEFT);
+        stringMatchInputBox.getChildren().clear();
+        stringMatchInputBox.getChildren().addAll(
+                new Label("文本:"), textField,
+                new Label("模式:"), patternField
+        );
+
+        centerBox = new VBox(10);
         centerBox.setPadding(new Insets(10));
         centerBox.getChildren().addAll(
                 new Label("算法代码:"), codeArea,
                 new Label("执行结果:"), resultArea
         );
 
-        setTop(controlBox);
-        setCenter(centerBox);
-
+        // 重新组织布局
         VBox topContainer = new VBox(5);
-        topContainer.getChildren().addAll(controlBox, queensOptionsBox);
+        topContainer.getChildren().addAll(
+                controlBox,
+                // 复选框统一位置
+                customTestBox,
+                queensOptionsBox,
+                customMaxSubarrayBox,
+                stringMatchInputBox
+        );
 
         setTop(topContainer);
         setCenter(centerBox);
     }
 
+//        setTop(controlBox);
+//        setCenter(centerBox);
+
+        // 将所有组件添加到主面板
+//        VBox topContainer = new VBox(5);
+//        topContainer.getChildren().addAll(controlBox, queensOptionsBox,
+//                customMaxSubarrayBox, stringMatchInputBox);
+
+
     // 设置事件处理器
     private void setupEventHandlers() {
         // 设置事件处理
         algorithmSelector.setOnAction(e -> loadSelectedAlgorithmCode());
+
+        // 选择测试用例时加载对应的输入
+        testCaseSelector.setOnAction(e -> {
+            TestCase selectedCase = testCaseSelector.getValue();
+            if (selectedCase instanceof StringMatchTestCase stringMatchCase) {
+                textField.setText(stringMatchCase.getText());
+                patternField.setText(stringMatchCase.getPattern());
+            }
+        });
 
         editButton.setOnAction(e -> {
             if (!codeArea.isEditable()) {
@@ -146,7 +250,6 @@ public class ProblemPanel extends BorderPane {
                 codeArea.setEditable(true);
                 editButton.setText("取消编辑");
                 reloadButton.setDisable(false);
-                // 添加提示信息
                 resultArea.setText("您现在可以编辑代码。编辑完成后，点击「编译运行」按钮编译并执行。");
             } else {
                 // 退出编辑模式
@@ -156,12 +259,17 @@ public class ProblemPanel extends BorderPane {
             }
         });
 
-        runButton.setOnAction(e -> compileAndRun());
+        runButton.setOnAction(e -> runProblem());
 
         reloadButton.setOnAction(e -> {
             if (originalCode != null) {
                 codeArea.setText(originalCode);
             }
+        });
+
+        useCustomTestCheckbox.setOnAction(e -> {
+            boolean isCustom = useCustomTestCheckbox.isSelected();
+            testCaseSelector.setDisable(isCustom);
         });
     }
 
@@ -170,14 +278,59 @@ public class ProblemPanel extends BorderPane {
         loadAlgorithms();
 
         // 根据问题类型显示特定组件
+        boolean isMaxSubArrayProblem = "最大子数组问题".equals(problem.getDisplayName()) ||
+                "max-subarray".equals(problem.getId());
+
         boolean isQueensProblem = "八皇后问题".equals(problem.getDisplayName()) ||
                 "queens".equals(problem.getId());
 
+        boolean isStringMatchProblem = "字符串匹配问题".equals(problem.getDisplayName()) ||
+                "string-match".equals(problem.getId());
+
         // 根据问题类型显示/隐藏控件
         queensOptionsBox.setVisible(isQueensProblem);
+        customMaxSubarrayBox.setVisible(isMaxSubArrayProblem);
+        stringMatchInputBox.setVisible(isStringMatchProblem);
         testCaseSelector.setVisible(!isQueensProblem);
 
-        if (!isQueensProblem) {
+        // 设置字符串匹配面板的可见性
+//        if (!isQueensProblem && !isStringMatchProblem) {
+//            loadTestCases();
+//        } else if (isStringMatchProblem) {
+//            loadStringMatchTestCases();
+//        }
+        if (isStringMatchProblem) {
+            loadStringMatchTestCases();
+        } else if (!isQueensProblem) {
+            loadTestCases();
+        }
+
+
+        // 更新组件可见性
+        queensOptionsBox.setVisible(isQueensProblem);
+        customMaxSubarrayBox.setVisible(isMaxSubArrayProblem);
+        stringMatchInputBox.setVisible(isStringMatchProblem);
+        testCaseSelector.setVisible(!isQueensProblem);
+
+        // 只在相关问题时显示复选框
+        useCustomTestCheckbox.setVisible(isMaxSubArrayProblem || isStringMatchProblem);
+
+
+        // 重置状态
+        useCustomTestCheckbox.setSelected(false);
+        testCaseSelector.setDisable(false);
+
+//        // 在相同位置添加复选框
+//        if (isStringMatchProblem) {
+//            if (!stringMatchInputBox.getChildren().contains(useCustomTestCheckbox)) {
+//                stringMatchInputBox.getChildren().addFirst(useCustomTestCheckbox);
+//            }
+//        }
+
+        // 加载相应测试用例
+        if (isStringMatchProblem) {
+            loadStringMatchTestCases();
+        } else if (!isQueensProblem) {
             loadTestCases();
         }
     }
@@ -202,6 +355,23 @@ public class ProblemPanel extends BorderPane {
             testCaseSelector.getItems().addAll(testCases);
             if (!testCases.isEmpty()) {
                 testCaseSelector.setValue(testCases.getFirst());
+            }
+        } catch (SQLException e) {
+            showAlert("加载测试用例失败: " + e.getMessage());
+        }
+    }
+
+    private void loadStringMatchTestCases() {
+        try {
+            testCases = testCaseService.getTestCases(currentProblemId);
+            testCaseSelector.getItems().clear();
+            testCaseSelector.getItems().addAll(testCases);
+            if (!testCases.isEmpty()) {
+                testCaseSelector.setValue(testCases.getFirst());
+                // 填充文本和模式串到输入框
+                StringMatchTestCase testCase = (StringMatchTestCase) testCaseSelector.getValue();
+                textField.setText(testCase.getText());
+                patternField.setText(testCase.getPattern());
             }
         } catch (SQLException e) {
             showAlert("加载测试用例失败: " + e.getMessage());
@@ -233,9 +403,12 @@ public class ProblemPanel extends BorderPane {
         }
     }
 
-    // 编译和运行算法代码
-    // 编译代码前先显示正在编译的消息
-    private void compileAndRun() {
+
+    // 运行问题
+    private void runProblem() {
+        long executionStartTime = System.nanoTime();
+        resultArea.setText("正在编译...");
+
         try {
             String sourceCode = codeArea.getText();
             if (sourceCode == null || sourceCode.trim().isEmpty()) {
@@ -243,67 +416,163 @@ public class ProblemPanel extends BorderPane {
                 return;
             }
 
-            // 判断是否是八皇后问题
-            boolean isQueensProblem = queensOptionsBox.isVisible();
-
-            if (isQueensProblem) {
+            if (queensOptionsBox.isVisible()) {
                 runQueensProblem();
+            } else if (stringMatchInputBox.isVisible()) {
+                // 字符串匹配问题
+                String text = textField.getText();
+                String pattern = patternField.getText();
+
+                // 确保输入不为空
+                if (text.isEmpty() || pattern.isEmpty()) {
+                    resultArea.setText("请输入有效的文本和模式串");
+                    return;
+                }
+
+                compileAndRunCode(text, pattern,
+                        "calc", String.class, String.class,
+                        "cn.edu.ustc.model.StringMatchResult");
             } else {
-                runMaxSubarrayProblem(sourceCode);
+                // 最大子数组问题
+                if (useCustomTestCheckbox.isSelected()) {
+                    try {
+                        String[] values = customArrayField.getText().split(",");
+                        int[] customArray = new int[values.length];
+                        for (int i = 0; i < values.length; i++) {
+                            customArray[i] = Integer.parseInt(values[i].trim());
+                        }
+                        compileAndRunCode(customArray, null,
+                                "calc", int[].class, null, null);
+                    } catch (NumberFormatException e) {
+                        resultArea.setText("无效的数组格式。请使用逗号分隔的整数。");
+                        return;
+                    }
+                } else {
+                    TestCase testCase = testCaseSelector.getValue();
+                    if (testCase == null) {
+                        resultArea.setText("请选择一个测试用例");
+                        return;
+                    }
+                    compileAndRunCode(testCase.getInputArray(), null,
+                            "calc", int[].class, null, null);
+                }
             }
+
+            // 执行时间
+            long executionEndTime = System.nanoTime();
+            double executionTimeMs = (executionEndTime - executionStartTime) / 1_000_000.0;
+            resultArea.appendText("\n\n执行时间: " + String.format("%.3f 毫秒", executionTimeMs));
         } catch (Exception e) {
             resultArea.setText("执行错误: " + e.getMessage());
             e.printStackTrace();
         }
     }
 
-    private void runMaxSubarrayProblem(String sourceCode) {
-        // 获取测试用例
-        TestCase testCase = testCaseSelector.getValue();
-        if (testCase == null) {
-            resultArea.setText("请选择一个测试用例");
-            return;
+
+
+    // 提取类名，确保处理public修饰符
+    private String extractClassName(String sourceCode) {
+        java.util.regex.Pattern pattern = java.util.regex.Pattern.compile("(public\\s+)?class\\s+(\\w+)");
+        java.util.regex.Matcher matcher = pattern.matcher(sourceCode);
+        if (matcher.find()) {
+            return matcher.group(2);
         }
+        return currentClassName;
+    }
 
-        resultArea.setText("正在编译...");
+    // 编译并运行代码
+    private void compileAndRunCode(Object arg1, Object arg2, String methodName,
+                                   Class<?> arg1Type, Class<?> arg2Type,
+                                   String expectedReturnType) throws Exception {
+        // 创建唯一类名
+        String sourceCode = codeArea.getText();
+        String actualClassName = extractClassName(sourceCode);
+        String uniqueClassName = actualClassName + "_" + System.currentTimeMillis();
+        String fullClassName = "cn.edu.ustc.algorithm." + uniqueClassName;
 
-        try {
-            // 添加时间戳创建唯一类名，避免类加载器缓存问题
-            String uniqueClassName = currentClassName + "_" + System.currentTimeMillis();
-            String fullClassName = "cn.edu.ustc.algorithm." + uniqueClassName;
+        // 修改源代码中的类名，确保正确处理public修饰符
+        String modifiedSourceCode = sourceCode.replaceFirst(
+                "(public\\s+)?class\\s+" + actualClassName + "\\b",
+                "public class " + uniqueClassName
+        );
 
-            // 修改源代码中的类名以匹配唯一类名
-            String modifiedSourceCode = sourceCode.replaceFirst(
-                    "class\\s+" + currentClassName,
-                    "class " + uniqueClassName
-            );
 
-            // 编译修改后的代码
-            Class<?> compiledClass = RuntimeCompiler.compileAndLoad(fullClassName, modifiedSourceCode);
+        // 编译代码
+        Class<?> compiledClass = RuntimeCompiler.compileAndLoad(fullClassName, modifiedSourceCode);
 
-            // 执行代码
-            int[] inputArray = testCase.getInputArray();
-            Object instance = compiledClass.getDeclaredConstructor().newInstance();
-            Method calcMethod = compiledClass.getMethod("calc", int[].class);
-            Object resultObj = calcMethod.invoke(instance, (Object) inputArray);
+        // 执行代码
+        Object instance = compiledClass.getDeclaredConstructor().newInstance();
+        Method method;
+        Object result;
 
-            // 提取数值结果
-            int numericResult = extractNumericResult(resultObj);
+        if (arg2Type != null) {
+            method = compiledClass.getMethod(methodName, arg1Type, arg2Type);
+            result = method.invoke(instance, arg1, arg2);
 
-            // 显示结果
-            displayMaxSubarrayResult(testCase, inputArray, numericResult);
-        } catch (Exception e) {
-            // 详细显示编译错误
-            resultArea.setText("错误: " + e.getMessage());
-            e.printStackTrace();
+            if (result != null && "cn.edu.ustc.model.StringMatchResult".equals(expectedReturnType)) {
+                cn.edu.ustc.model.StringMatchResult matchResult =
+                        (cn.edu.ustc.model.StringMatchResult) result;
+                displayStringMatchResult((String) arg1, (String) arg2, matchResult);
+            }
+        } else {
+            method = compiledClass.getMethod(methodName, arg1Type);
+            result = method.invoke(instance, arg1);
+
+            if (arg1 instanceof int[] intArg1) {
+                int numericResult = extractNumericResult(result);
+                TestCase testCase = testCaseSelector.getValue();
+                displayMaxSubarrayResult(testCase, intArg1, numericResult);
+            }
         }
     }
+
+//    private void runMaxSubarrayProblem(String sourceCode) {
+//        // 获取测试用例
+//        TestCase testCase = testCaseSelector.getValue();
+//        if (testCase == null) {
+//            resultArea.setText("请选择一个测试用例");
+//            return;
+//        }
+//
+//        resultArea.setText("正在编译...");
+//
+//        try {
+//            // 添加时间戳创建唯一类名，避免类加载器缓存问题
+//            String uniqueClassName = currentClassName + "_" + System.currentTimeMillis();
+//            String fullClassName = "cn.edu.ustc.algorithm." + uniqueClassName;
+//
+//            // 修改源代码中的类名以匹配唯一类名
+//            String modifiedSourceCode = sourceCode.replaceFirst(
+//                    "class\\s+" + currentClassName,
+//                    "class " + uniqueClassName
+//            );
+//
+//            // 编译修改后的代码
+//            Class<?> compiledClass = RuntimeCompiler.compileAndLoad(fullClassName, modifiedSourceCode);
+//
+//            // 执行代码
+//            int[] inputArray = testCase.getInputArray();
+//            Object instance = compiledClass.getDeclaredConstructor().newInstance();
+//            Method calcMethod = compiledClass.getMethod("calc", int[].class);
+//            Object resultObj = calcMethod.invoke(instance, (Object) inputArray);
+//
+//            // 提取数值结果
+//            int numericResult = extractNumericResult(resultObj);
+//
+//            // 显示结果
+//            displayMaxSubarrayResult(testCase, inputArray, numericResult);
+//        } catch (Exception e) {
+//            // 详细显示编译错误
+//            resultArea.setText("错误: " + e.getMessage());
+//            e.printStackTrace();
+//        }
+//    }
 
     private int extractNumericResult(Object resultObj) {
         if (resultObj == null) return 0;
 
-        if (resultObj instanceof Integer) {
-            return (Integer) resultObj;
+        if (resultObj instanceof Integer intResult) {
+            return intResult;
         }
 
         // 通过反射获取maxSum字段的值
@@ -313,7 +582,7 @@ public class ProblemPanel extends BorderPane {
             return (Integer) field.get(resultObj);
         } catch (Exception ex) {
             System.err.println("无法获取maxSum值: " + ex);
-            return -1; // 表示获取失败
+            return -1;
         }
     }
 
@@ -383,9 +652,9 @@ public class ProblemPanel extends BorderPane {
             output.append("方案 ").append(i + 1).append(":\n");
 
             // 显示棋盘
-            for (int row = 0; row < solution.length; row++) {
+            for (int j : solution) {
                 for (int col = 0; col < solution.length; col++) {
-                    output.append(solution[row] == col ? "Q " : ". ");
+                    output.append(j == col ? "Q " : ". ");
                 }
                 output.append("\n");
             }
@@ -397,6 +666,88 @@ public class ProblemPanel extends BorderPane {
         }
 
         resultArea.setText(output.toString());
+    }
+
+//    private void runStringMatching() {
+//        resultArea.setText("正在运行字符串匹配算法...");
+//
+//        try {
+//            String text = textField.getText();
+//            String pattern = patternField.getText();
+//
+//            if (text.isEmpty() || pattern.isEmpty()) {
+//                resultArea.setText("请输入有效的文本和模式串");
+//                return;
+//            }
+//
+//            String selectedAlgo = algorithmSelector.getValue();
+//            String sourceCode = codeArea.getText();
+//
+//            // 添加时间戳创建唯一类名，避免类加载器缓存问题
+//            String uniqueClassName = currentClassName + "_" + System.currentTimeMillis();
+//            String fullClassName = "cn.edu.ustc.algorithm." + uniqueClassName;
+//
+//            // 修改源代码中的类名以匹配唯一类名
+//            String modifiedSourceCode = sourceCode.replaceFirst(
+//                    "class\\s+" + currentClassName,
+//                    "class " + uniqueClassName
+//            );
+//
+//            // 编译修改后的代码
+//            Class<?> compiledClass = RuntimeCompiler.compileAndLoad(fullClassName, modifiedSourceCode);
+//
+//            // 执行代码
+//            Object instance = compiledClass.getDeclaredConstructor().newInstance();
+//            Method calcMethod = compiledClass.getMethod("calc", String.class, String.class);
+//            Object resultObj = calcMethod.invoke(instance, text, pattern);
+//
+//            // 显示结果
+//            if (resultObj instanceof cn.edu.ustc.model.StringMatchResult) {
+//                cn.edu.ustc.model.StringMatchResult matchResult =
+//                        (cn.edu.ustc.model.StringMatchResult) resultObj;
+//                displayStringMatchResult(text, pattern, matchResult);
+//            } else {
+//                resultArea.setText("算法返回的结果类型不正确，请确保返回StringMatchResult类型");
+//            }
+//
+//        } catch (Exception e) {
+//            resultArea.setText("运行错误: " + e.getMessage() + "\n" + e);
+//            e.printStackTrace();
+//        }
+//    }
+
+    // 显示字符串匹配结果
+    private void displayStringMatchResult(String text, String pattern,
+                                          cn.edu.ustc.model.StringMatchResult result) {
+        StringBuilder sb = new StringBuilder();
+        sb.append("字符串匹配结果：\n\n");
+        sb.append("文本: ").append(text).append("\n");
+        sb.append("模式: ").append(pattern).append("\n\n");
+        sb.append(result.toString());
+
+        // 显示期望结果和匹配结果
+        TestCase testCase = testCaseSelector.getValue();
+        if (testCase instanceof StringMatchTestCase stringMatchCase) {
+            String expectedOutput = stringMatchCase.getExpectedOutput();
+
+            if (expectedOutput != null && !expectedOutput.isEmpty()) {
+                sb.append("\n\n期望结果: ").append(expectedOutput);
+                String positionsStr = result.getPositions().toString();
+
+                String extractedExpected = expectedOutput;
+                if (expectedOutput.contains("[")) {
+                    extractedExpected = expectedOutput.substring(expectedOutput.indexOf("["));
+                }
+
+                if (positionsStr.equals(extractedExpected)) {
+                    sb.append("\n√ 结果匹配");
+                } else {
+                    sb.append("\n× 结果不匹配");
+                }
+            }
+        }
+
+        resultArea.setText(sb.toString());
     }
 
     private void showAlert(String message) {

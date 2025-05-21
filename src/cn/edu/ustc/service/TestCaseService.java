@@ -1,5 +1,6 @@
 package cn.edu.ustc.service;
 
+import cn.edu.ustc.model.StringMatchTestCase;
 import cn.edu.ustc.model.TestCase;
 import cn.edu.ustc.util.DatabaseManager;
 
@@ -14,32 +15,55 @@ import java.util.List;
  * @author SiriusPaul
  * @version V1.0
  * @CreateDate 2025/5/17
- * @Description æµ‹è¯•ç”¨ä¾‹æœåŠ¡ç±»,ç”¨äºä»æ•°æ®åº“ä¸­è·å–æµ‹è¯•ç”¨ä¾‹ä¿¡æ¯,å¹¶å°è£…ä¸ºTestCaseå¯¹è±¡
+ * @Description ²âÊÔÓÃÀı·şÎñÀà,ÓÃÓÚ´ÓÊı¾İ¿âÖĞ»ñÈ¡²âÊÔÓÃÀıĞÅÏ¢,²¢·â×°ÎªTestCase¶ÔÏó
  */
 public class TestCaseService {
     public List<TestCase> getTestCases(String problemId) throws SQLException {
-        String sql = "SELECT id, problem_id, name, input_data, expected_output FROM test_cases WHERE problem_id = ?";
         List<TestCase> testCases = new ArrayList<>();
 
-        try (Connection conn = DatabaseManager.getConnection();
-             PreparedStatement stmt = conn.prepareStatement(sql)) {
+        try (Connection conn = DatabaseManager.getConnection()) {
+            String sql;
+            PreparedStatement stmt;
 
-            // è®¾ç½®æŸ¥è¯¢å‚æ•°
-            stmt.setString(1, problemId);
-            ResultSet rs = stmt.executeQuery();
+            if ("string-match".equals(problemId)) {
+                sql = "SELECT id, name, problem_id, text, pattern, expected_output " +
+                        "FROM string_match_test_cases WHERE problem_id = ?";
+                stmt = conn.prepareStatement(sql);
+                stmt.setString(1, problemId);
 
-            // éå†ç»“æœé›†ï¼Œå°†æ¯ä¸ªæµ‹è¯•ç”¨ä¾‹æ·»åŠ åˆ°åˆ—è¡¨ä¸­
-            while (rs.next()) {
-                TestCase testCase = new TestCase();
-                testCase.setId(rs.getInt("id"));
-                testCase.setProblemId(rs.getString("problem_id"));
-                testCase.setName(rs.getString("name"));
-                testCase.setInputData(rs.getString("input_data"));
-                testCase.setExpectedOutput(rs.getString("expected_output"));
-                testCases.add(testCase);
+                try (ResultSet rs = stmt.executeQuery()) {
+                    while (rs.next()) {
+                        // ´´½¨StringMatchTestCase²¢ÉèÖÃÊôĞÔ
+                        StringMatchTestCase testCase = new StringMatchTestCase();
+                        testCase.setId(rs.getInt("id"));
+                        testCase.setName(rs.getString("name"));
+                        testCase.setProblemId(rs.getString("problem_id"));
+                        testCase.setExpectedOutput(rs.getString("expected_output"));
+                        testCase.setText(rs.getString("text"));
+                        testCase.setPattern(rs.getString("pattern"));
+
+                        testCases.add(testCase);
+                    }
+                }
+            } else {
+                sql = "SELECT id, name, problem_id, input_data, expected_output " +
+                        "FROM test_cases WHERE problem_id = ?";
+                stmt = conn.prepareStatement(sql);
+                stmt.setString(1, problemId);
+
+                try (ResultSet rs = stmt.executeQuery()) {
+                    while (rs.next()) {
+                        TestCase testCase = new TestCase();
+                        testCase.setId(rs.getInt("id"));
+                        testCase.setName(rs.getString("name"));
+                        testCase.setProblemId(rs.getString("problem_id"));
+                        testCase.setInputData(rs.getString("input_data"));
+                        testCase.setExpectedOutput(rs.getString("expected_output"));
+                        testCases.add(testCase);
+                    }
+                }
             }
         }
-
         return testCases;
     }
 }
