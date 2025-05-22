@@ -7,21 +7,22 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="801b9ca9-dfd1-4a38-8717-d8386e05d69d" name="更改" comment="添加了八皇后问题的算法、接口和结果，重构了problem panel，把运行组件独立为方法。">
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/lib.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/cn/edu/ustc/algorithm/BoyerMooreStringMatcher.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/cn/edu/ustc/algorithm/EnumerationStringMatcher.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/cn/edu/ustc/algorithm/KMPStringMatcher.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/cn/edu/ustc/gui/StringMatchPanel.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/cn/edu/ustc/model/StringMatchResult.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/cn/edu/ustc/model/StringMatchTestCase.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/cn/edu/ustc/util/AlgorithmTimer.java" afterDir="false" />
+    <list default="true" id="801b9ca9-dfd1-4a38-8717-d8386e05d69d" name="更改" comment="添加了字符串匹配问题的算法、接口和结果，重构了problem panel，把运行组件独立为方法。添加了最大子数组问题和字符串匹配问题的自定义测试样例输入。TODO:优化自定义测试样例的UI，优化problem panel的冗余代码，使用设计模式重构代码。美化UI，添加说明组件。">
+      <change afterPath="$PROJECT_DIR$/src/cn/edu/ustc/gui/command/Command.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/cn/edu/ustc/gui/command/EditCodeCommand.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/cn/edu/ustc/gui/command/ReloadCodeCommand.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/cn/edu/ustc/gui/command/RunCommand.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/cn/edu/ustc/gui/factory/StrategyFactory.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/cn/edu/ustc/gui/factory/UIFactory.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/cn/edu/ustc/gui/strategy/DefaultProblemStrategy.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/cn/edu/ustc/gui/strategy/MaxSubarrayStrategy.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/cn/edu/ustc/gui/strategy/ProblemStrategy.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/cn/edu/ustc/gui/strategy/QueensStrategy.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/cn/edu/ustc/gui/strategy/StringMatchStrategy.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/MarsCodeWorkspaceAppSettings.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/MarsCodeWorkspaceAppSettings.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/encodings.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/encodings.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/sqldialects.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/sqldialects.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/cn/edu/ustc/gui/ProblemPanel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/cn/edu/ustc/gui/ProblemPanel.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/cn/edu/ustc/model/ProblemType.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/cn/edu/ustc/model/ProblemType.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/cn/edu/ustc/service/TestCaseService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/cn/edu/ustc/service/TestCaseService.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -31,8 +32,8 @@
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
-        <option value="Interface" />
         <option value="Class" />
+        <option value="Interface" />
       </list>
     </option>
   </component>
@@ -74,6 +75,7 @@
     "RunOnceActivity.git.unshallow": "true",
     "SHARE_PROJECT_CONFIGURATION_FILES": "true",
     "SONARLINT_PRECOMMIT_ANALYSIS": "true",
+    "extract.method.default.visibility": "private",
     "git-widget-placeholder": "reflection",
     "ignore.virus.scanning.warn.message": "true",
     "kotlin-language-version-configured": "true",
@@ -99,6 +101,11 @@
     ]
   }
 }]]></component>
+  <component name="RecentsManager">
+    <key name="MoveClassesOrPackagesDialog.RECENTS_KEY">
+      <recent name="cn.edu.ustc.gui.strategy" />
+    </key>
+  </component>
   <component name="RunManager" selected="应用程序.AlgorithmApp">
     <configuration name="AlgorithmApp" type="Application" factoryName="Application" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="cn.edu.ustc.app.AlgorithmApp" />
@@ -179,7 +186,8 @@
       <workItem from="1747412594557" duration="14923000" />
       <workItem from="1747477636158" duration="8975000" />
       <workItem from="1747629327906" duration="611000" />
-      <workItem from="1747662021866" duration="34895000" />
+      <workItem from="1747662021866" duration="45069000" />
+      <workItem from="1747880575716" duration="11394000" />
     </task>
     <task id="LOCAL-00001" summary="第一次实验课，完整可运行代码">
       <option name="closed" value="true" />
@@ -213,7 +221,15 @@
       <option name="project" value="LOCAL" />
       <updated>1747486204751</updated>
     </task>
-    <option name="localTasksCounter" value="5" />
+    <task id="LOCAL-00005" summary="添加了字符串匹配问题的算法、接口和结果，重构了problem panel，把运行组件独立为方法。添加了最大子数组问题和字符串匹配问题的自定义测试样例输入。TODO:优化自定义测试样例的UI，优化problem panel的冗余代码，使用设计模式重构代码。美化UI，添加说明组件。">
+      <option name="closed" value="true" />
+      <created>1747792004558</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1747792004558</updated>
+    </task>
+    <option name="localTasksCounter" value="6" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -293,7 +309,18 @@
     <MESSAGE value="第一次实验课，完整可运行代码" />
     <MESSAGE value="第九次课，含UI界面，算法没写完" />
     <MESSAGE value="重构了界面，只保留了problem panel，这样可以利用反射机制实现实时编译，（注意由于JVM的类加载机制，重新编译代码JVM会使用之前加载的类，且不能加载同名类，因此这里利用时间戳为每次编译都修改源代码的类名，使其唯一）" />
-    <option name="LAST_COMMIT_MESSAGE" value="重构了界面，只保留了problem panel，这样可以利用反射机制实现实时编译，（注意由于JVM的类加载机制，重新编译代码JVM会使用之前加载的类，且不能加载同名类，因此这里利用时间戳为每次编译都修改源代码的类名，使其唯一）" />
+    <MESSAGE value="添加了字符串匹配问题的算法、接口和结果，重构了problem panel，把运行组件独立为方法。添加了最大子数组问题和字符串匹配问题的自定义测试样例输入。TODO:优化自定义测试样例的UI，优化problem panel的冗余代码，使用设计模式重构代码。美化UI，添加说明组件。" />
+    <option name="LAST_COMMIT_MESSAGE" value="添加了字符串匹配问题的算法、接口和结果，重构了problem panel，把运行组件独立为方法。添加了最大子数组问题和字符串匹配问题的自定义测试样例输入。TODO:优化自定义测试样例的UI，优化problem panel的冗余代码，使用设计模式重构代码。美化UI，添加说明组件。" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <breakpoint enabled="true" type="java-exception">
+          <properties class="java.lang.StackOverflowError" package="java.lang" />
+          <option name="timeStamp" value="1" />
+        </breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />
