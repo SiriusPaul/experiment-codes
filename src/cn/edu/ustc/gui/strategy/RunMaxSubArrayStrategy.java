@@ -1,13 +1,13 @@
 package cn.edu.ustc.gui.strategy;
 
 import cn.edu.ustc.gui.ProblemPanel;
+import cn.edu.ustc.gui.factory.UIFactory;
 import cn.edu.ustc.model.TestCase;
 import cn.edu.ustc.service.TestCaseService;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.control.CheckBox;
-import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
@@ -21,21 +21,25 @@ import java.util.List;
  * @CreateDate 2025/5/21
  * @Description 最大子数组问题策略
  */
-public class MaxSubarrayStrategy implements ProblemStrategy {
+public class RunMaxSubArrayStrategy implements RunProblemStrategy {
     private final ProblemPanel panel;
     private final TestCaseService testCaseService;
     private final TextField customArrayField;
     private final VBox controlsContainer;
     private final CheckBox useCustomTestCheckbox;
 
-    public MaxSubarrayStrategy(ProblemPanel panel, TestCaseService testCaseService) {
+    public RunMaxSubArrayStrategy(ProblemPanel panel, TestCaseService testCaseService) {
         this.panel = panel;
         this.testCaseService = testCaseService;
 
-        // 创建组件
-        customArrayField = new TextField();
-        customArrayField.setPromptText("输入数组，例如：-2,1,-3,4,-1,2,1,-5,4");
-        customArrayField.setPrefWidth(300);
+//        // 创建组件
+//        customArrayField = new TextField();
+//        customArrayField.setPromptText("输入数组，例如：-2,1,-3,4,-1,2,1,-5,4");
+//        customArrayField.setPrefWidth(300);
+
+        // 使用UIFactory创建美化后的组件
+        customArrayField = UIFactory.createTextField(300, 25, "输入数组，例如：-2,1,-3,4,-1,2,1,-5,4");
+
 
         // 使用面板提供的复选框
         useCustomTestCheckbox = panel.getUseCustomTestCheckbox();
@@ -43,13 +47,21 @@ public class MaxSubarrayStrategy implements ProblemStrategy {
                 panel.getTestCaseSelector().setDisable(useCustomTestCheckbox.isSelected()));
 
         // 创建标准化的布局
-        HBox inputBox = new HBox(10, new Label("数组:"), customArrayField);
-        inputBox.setPadding(new Insets(5, 10, 5, 10));
-        inputBox.setAlignment(Pos.CENTER_LEFT);
+        HBox inputBox = UIFactory.createHBox(10, new Insets(5, 10, 5, 10), Pos.CENTER_LEFT,
+                UIFactory.createLabel("数组:"), customArrayField);
 
         // 包装在VBox中以便整体控制
-        controlsContainer = new VBox(5, useCustomTestCheckbox,inputBox);
-        controlsContainer.setPadding(new Insets(10));
+        controlsContainer = UIFactory.createVBox(5, new Insets(10), useCustomTestCheckbox, inputBox);
+
+//        // 创建标准化的布局
+//        HBox inputBox = new HBox(10, new Label("数组:"), customArrayField);
+//        inputBox.setPadding(new Insets(5, 10, 5, 10));
+//        inputBox.setAlignment(Pos.CENTER_LEFT);
+//
+//        // 包装在VBox中以便整体控制
+//        controlsContainer = new VBox(5, useCustomTestCheckbox,inputBox);
+//        controlsContainer.setPadding(new Insets(10));
+
     }
 
     @Override
@@ -81,7 +93,7 @@ public class MaxSubarrayStrategy implements ProblemStrategy {
 
     @Override
     public void loadTestCaseInputs() {
-
+        // TODO document why this method is empty
     }
 
     @Override

@@ -1,6 +1,7 @@
 package cn.edu.ustc.gui.strategy;
 
 import cn.edu.ustc.gui.ProblemPanel;
+import cn.edu.ustc.gui.factory.UIFactory;
 import cn.edu.ustc.model.StringMatchResult;
 import cn.edu.ustc.model.StringMatchTestCase;
 import cn.edu.ustc.model.TestCase;
@@ -9,8 +10,6 @@ import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.control.CheckBox;
-import javafx.scene.control.Label;
-import javafx.scene.control.TextField;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 
@@ -22,42 +21,34 @@ import java.util.List;
  * @CreateDate 2025/5/21
  * @Description 字符串匹配问题策略
  */
-public class StringMatchStrategy implements ProblemStrategy {
+public class RunStringMatchStrategy implements RunProblemStrategy {
     private final ProblemPanel panel;
     private final TestCaseService testCaseService;
-    private final TextField textField;
-    private final TextField patternField;
+    private final javafx.scene.control.TextField textField;
+    private final javafx.scene.control.TextField patternField;
     private final VBox controlsContainer;
     private final CheckBox useCustomTestCheckbox;
 
-    public StringMatchStrategy(ProblemPanel panel, TestCaseService testCaseService) {
+    public RunStringMatchStrategy(ProblemPanel panel, TestCaseService testCaseService) {
         this.panel = panel;
         this.testCaseService = testCaseService;
 
-        // 创建组件
-        textField = new TextField();
-        textField.setPrefWidth(300);
-        textField.setPrefHeight(25);
-
-        patternField = new TextField();
-        patternField.setPrefWidth(150);
-        patternField.setPrefHeight(25);
+        // 使用UIFactory创建美化后的组件
+        textField = UIFactory.createTextField(300, 25, "输入文本");
+        patternField = UIFactory.createTextField(150, 25, "输入模式串");
 
         // 使用面板提供的复选框
         useCustomTestCheckbox = panel.getUseCustomTestCheckbox();
         useCustomTestCheckbox.setOnAction(e ->
                 panel.getTestCaseSelector().setDisable(useCustomTestCheckbox.isSelected()));
 
-        // 创建标准化的布局
-        HBox inputBox = new HBox(10,
-                new Label("文本:"), textField,
-                new Label("模式:"), patternField);
-        inputBox.setPadding(new Insets(5, 10, 5, 10));
-        inputBox.setAlignment(Pos.CENTER_LEFT);
+        // 使用UIFactory创建标准化的布局
+        HBox inputBox = UIFactory.createHBox(10, new Insets(5, 10, 5, 10), Pos.CENTER_LEFT,
+                UIFactory.createLabel("文本:"), textField,
+                UIFactory.createLabel("模式:"), patternField);
 
         // 包装在VBox中以便整体控制
-        controlsContainer = new VBox(5, useCustomTestCheckbox, inputBox);
-        controlsContainer.setPadding(new Insets(10));
+        controlsContainer = UIFactory.createVBox(5, new Insets(10), useCustomTestCheckbox, inputBox);
     }
 
     @Override
@@ -69,7 +60,7 @@ public class StringMatchStrategy implements ProblemStrategy {
 
             if (!testCases.isEmpty()) {
                 panel.getTestCaseSelector().setValue(testCases.getFirst());
-
+                loadTestCaseInputs();
             }
         } catch (Exception e) {
             panel.showAlert("加载测试用例失败: " + e.getMessage());
@@ -98,7 +89,7 @@ public class StringMatchStrategy implements ProblemStrategy {
 
         // 为测试用例选择器添加事件处理
         panel.getTestCaseSelector().setOnAction(e -> loadTestCaseInputs());
-   }
+    }
 
     @Override
     public void execute() throws Exception {
@@ -144,11 +135,11 @@ public class StringMatchStrategy implements ProblemStrategy {
     }
 
     // Getters for testing
-    public TextField getTextField() {
+    public javafx.scene.control.TextField getTextField() {
         return textField;
     }
 
-    public TextField getPatternField() {
+    public javafx.scene.control.TextField getPatternField() {
         return patternField;
     }
 }

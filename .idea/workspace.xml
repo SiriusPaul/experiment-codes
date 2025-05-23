@@ -7,22 +7,32 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="801b9ca9-dfd1-4a38-8717-d8386e05d69d" name="更改" comment="添加了字符串匹配问题的算法、接口和结果，重构了problem panel，把运行组件独立为方法。添加了最大子数组问题和字符串匹配问题的自定义测试样例输入。TODO:优化自定义测试样例的UI，优化problem panel的冗余代码，使用设计模式重构代码。美化UI，添加说明组件。">
-      <change afterPath="$PROJECT_DIR$/src/cn/edu/ustc/gui/command/Command.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/cn/edu/ustc/gui/command/EditCodeCommand.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/cn/edu/ustc/gui/command/ReloadCodeCommand.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/cn/edu/ustc/gui/command/RunCommand.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/cn/edu/ustc/gui/factory/StrategyFactory.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/cn/edu/ustc/gui/factory/UIFactory.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/cn/edu/ustc/gui/strategy/DefaultProblemStrategy.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/cn/edu/ustc/gui/strategy/MaxSubarrayStrategy.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/cn/edu/ustc/gui/strategy/ProblemStrategy.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/cn/edu/ustc/gui/strategy/QueensStrategy.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/cn/edu/ustc/gui/strategy/StringMatchStrategy.java" afterDir="false" />
+    <list default="true" id="801b9ca9-dfd1-4a38-8717-d8386e05d69d" name="更改" comment="将程序按照策略工厂模式和命令模式的思路进行了重构，主要封装了运行各个问题的策略，将方法从problemPanel中提取出来，使其变得简洁，且易拓展。优化了自定义测试的结果显示，这样在自定义运行的情况下不会显示是否正确运行。TODO:优化UI，增加提示组件。">
+      <change afterPath="$PROJECT_DIR$/src/cn/edu/ustc/model/MaxSubArrayStrategy.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/cn/edu/ustc/model/ProblemInfo.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/cn/edu/ustc/model/StringMatcherContext.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/cn/edu/ustc/model/StringMatcherStrategy.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/cn/edu/ustc/service/ProblemInfoService.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/MarsCodeWorkspaceAppSettings.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/MarsCodeWorkspaceAppSettings.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/encodings.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/encodings.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/sqldialects.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/sqldialects.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/cn/edu/ustc/algorithm/BoyerMooreStringMatcher.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/cn/edu/ustc/algorithm/BoyerMooreStringMatcher.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/cn/edu/ustc/algorithm/DynamicProgrammingMaxSubArray.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/cn/edu/ustc/algorithm/DynamicProgrammingMaxSubArray.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/cn/edu/ustc/algorithm/EnumerationMaxSubArray.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/cn/edu/ustc/algorithm/EnumerationMaxSubArray.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/cn/edu/ustc/algorithm/EnumerationStringMatcher.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/cn/edu/ustc/algorithm/BruteForceStringMatcher.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/cn/edu/ustc/algorithm/KMPStringMatcher.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/cn/edu/ustc/algorithm/KMPStringMatcher.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/cn/edu/ustc/gui/ProblemPanel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/cn/edu/ustc/gui/ProblemPanel.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/cn/edu/ustc/gui/StringMatchPanel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/cn/edu/ustc/gui/StringMatchPanel.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/cn/edu/ustc/gui/factory/StrategyFactory.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/cn/edu/ustc/gui/factory/StrategyFactory.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/cn/edu/ustc/gui/factory/UIFactory.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/cn/edu/ustc/gui/factory/UIFactory.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/cn/edu/ustc/gui/strategy/DefaultProblemStrategy.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/cn/edu/ustc/gui/strategy/RunDefaultProblemStrategy.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/cn/edu/ustc/gui/strategy/MaxSubarrayStrategy.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/cn/edu/ustc/gui/strategy/RunMaxSubArrayStrategy.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/cn/edu/ustc/gui/strategy/ProblemStrategy.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/cn/edu/ustc/gui/strategy/RunProblemStrategy.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/cn/edu/ustc/gui/strategy/QueensStrategy.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/cn/edu/ustc/gui/strategy/RunQueensStrategy.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/cn/edu/ustc/gui/strategy/StringMatchStrategy.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/cn/edu/ustc/gui/strategy/RunStringMatchStrategy.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/cn/edu/ustc/model/Context.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/cn/edu/ustc/model/MaxSubArrayContext.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/cn/edu/ustc/service/MaxSubArrayStrategy.java" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -32,8 +42,8 @@
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
-        <option value="Class" />
         <option value="Interface" />
+        <option value="Class" />
       </list>
     </option>
   </component>
@@ -187,7 +197,7 @@
       <workItem from="1747477636158" duration="8975000" />
       <workItem from="1747629327906" duration="611000" />
       <workItem from="1747662021866" duration="45069000" />
-      <workItem from="1747880575716" duration="11394000" />
+      <workItem from="1747880575716" duration="43101000" />
     </task>
     <task id="LOCAL-00001" summary="第一次实验课，完整可运行代码">
       <option name="closed" value="true" />
@@ -229,7 +239,15 @@
       <option name="project" value="LOCAL" />
       <updated>1747792004558</updated>
     </task>
-    <option name="localTasksCounter" value="6" />
+    <task id="LOCAL-00006" summary="将程序按照策略工厂模式和命令模式的思路进行了重构，主要封装了运行各个问题的策略，将方法从problemPanel中提取出来，使其变得简洁，且易拓展。优化了自定义测试的结果显示，这样在自定义运行的情况下不会显示是否正确运行。TODO:优化UI，增加提示组件。">
+      <option name="closed" value="true" />
+      <created>1747907730079</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1747907730079</updated>
+    </task>
+    <option name="localTasksCounter" value="7" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -310,7 +328,8 @@
     <MESSAGE value="第九次课，含UI界面，算法没写完" />
     <MESSAGE value="重构了界面，只保留了problem panel，这样可以利用反射机制实现实时编译，（注意由于JVM的类加载机制，重新编译代码JVM会使用之前加载的类，且不能加载同名类，因此这里利用时间戳为每次编译都修改源代码的类名，使其唯一）" />
     <MESSAGE value="添加了字符串匹配问题的算法、接口和结果，重构了problem panel，把运行组件独立为方法。添加了最大子数组问题和字符串匹配问题的自定义测试样例输入。TODO:优化自定义测试样例的UI，优化problem panel的冗余代码，使用设计模式重构代码。美化UI，添加说明组件。" />
-    <option name="LAST_COMMIT_MESSAGE" value="添加了字符串匹配问题的算法、接口和结果，重构了problem panel，把运行组件独立为方法。添加了最大子数组问题和字符串匹配问题的自定义测试样例输入。TODO:优化自定义测试样例的UI，优化problem panel的冗余代码，使用设计模式重构代码。美化UI，添加说明组件。" />
+    <MESSAGE value="将程序按照策略工厂模式和命令模式的思路进行了重构，主要封装了运行各个问题的策略，将方法从problemPanel中提取出来，使其变得简洁，且易拓展。优化了自定义测试的结果显示，这样在自定义运行的情况下不会显示是否正确运行。TODO:优化UI，增加提示组件。" />
+    <option name="LAST_COMMIT_MESSAGE" value="将程序按照策略工厂模式和命令模式的思路进行了重构，主要封装了运行各个问题的策略，将方法从problemPanel中提取出来，使其变得简洁，且易拓展。优化了自定义测试的结果显示，这样在自定义运行的情况下不会显示是否正确运行。TODO:优化UI，增加提示组件。" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

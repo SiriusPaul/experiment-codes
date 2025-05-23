@@ -9,10 +9,10 @@
     <file url="file://$PROJECT_DIR$/src/cn/edu/ustc/gui/ResultPanel.java" charset="GBK" />
     <file url="file://$PROJECT_DIR$/src/cn/edu/ustc/gui/StringMatchPanel.java" charset="GBK" />
     <file url="file://$PROJECT_DIR$/src/cn/edu/ustc/gui/factory/StrategyFactory.java" charset="GBK" />
-    <file url="file://$PROJECT_DIR$/src/cn/edu/ustc/gui/strategy/DefaultProblemStrategy.java" charset="GBK" />
-    <file url="file://$PROJECT_DIR$/src/cn/edu/ustc/gui/strategy/MaxSubarrayStrategy.java" charset="GBK" />
-    <file url="file://$PROJECT_DIR$/src/cn/edu/ustc/gui/strategy/QueensStrategy.java" charset="GBK" />
-    <file url="file://$PROJECT_DIR$/src/cn/edu/ustc/gui/strategy/StringMatchStrategy.java" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/src/cn/edu/ustc/gui/strategy/RunDefaultProblemStrategy.java" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/src/cn/edu/ustc/gui/strategy/RunMaxSubArrayStrategy.java" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/src/cn/edu/ustc/gui/strategy/RunQueensStrategy.java" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/src/cn/edu/ustc/gui/strategy/RunStringMatchStrategy.java" charset="GBK" />
     <file url="file://$PROJECT_DIR$/src/cn/edu/ustc/model/ProblemType.java" charset="GBK" />
     <file url="file://$PROJECT_DIR$/src/cn/edu/ustc/model/StringMatchResult.java" charset="GBK" />
     <file url="file://$PROJECT_DIR$/src/cn/edu/ustc/service/TestCaseService.java" charset="GBK" />

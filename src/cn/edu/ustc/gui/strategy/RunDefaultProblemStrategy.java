@@ -14,11 +14,11 @@ import java.util.List;
  * @CreateDate 2025/5/21
  * @Description 默认问题策略，适用于未特殊处理的问题类型
  */
-public class DefaultProblemStrategy implements ProblemStrategy {
+public class RunDefaultProblemStrategy implements RunProblemStrategy {
     private final ProblemPanel panel;
     private final TestCaseService testCaseService;
 
-    public DefaultProblemStrategy(ProblemPanel panel, TestCaseService testCaseService) {
+    public RunDefaultProblemStrategy(ProblemPanel panel, TestCaseService testCaseService) {
         this.panel = panel;
         this.testCaseService = testCaseService;
     }

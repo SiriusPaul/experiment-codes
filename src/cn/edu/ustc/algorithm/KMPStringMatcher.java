@@ -1,6 +1,7 @@
 package cn.edu.ustc.algorithm;
 
 import cn.edu.ustc.model.StringMatchResult;
+import cn.edu.ustc.model.StringMatcherStrategy;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -11,7 +12,7 @@ import java.util.List;
  * @CreateDate 2025/5/18
  * @Description
  */
-public class KMPStringMatcher {
+public class KMPStringMatcher implements StringMatcherStrategy {
     /**
      * 使用KMP算法查找模式串在文本串中的所有出现位置
      *

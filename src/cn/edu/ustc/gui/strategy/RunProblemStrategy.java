@@ -9,7 +9,7 @@ import java.util.List;
  * @CreateDate 2025/5/21
  * @Description
  */
-public interface ProblemStrategy {
+public interface RunProblemStrategy {
     // 加载测试用例
     void loadTestCases(String problemId);
 

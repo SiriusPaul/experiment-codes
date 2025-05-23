@@ -1,6 +1,7 @@
 package cn.edu.ustc.algorithm;
 
 import cn.edu.ustc.model.StringMatchResult;
+import cn.edu.ustc.model.StringMatcherStrategy;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -13,7 +14,7 @@ import java.util.Map;
  * @CreateDate 2025/5/18
  * @Description
  */
-public class BoyerMooreStringMatcher {
+public class BoyerMooreStringMatcher implements StringMatcherStrategy {
     /**
      * 使用Boyer-Moore算法查找模式串在文本串中的所有出现位置
      *

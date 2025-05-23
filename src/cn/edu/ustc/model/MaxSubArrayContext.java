@@ -1,18 +1,16 @@
 package cn.edu.ustc.model;
 
-import cn.edu.ustc.service.MaxSubArrayStrategy;
-
 /**
  * @author SiriusPaul
  * @version V1.0
  * @CreateDate 2025/3/14
  * @Description
  */
-public class Context {
+public class MaxSubArrayContext {
     private MaxSubArrayStrategy strategy;
-    public Context() {
+    public MaxSubArrayContext() {
     }
-    public Context(MaxSubArrayStrategy strategy) {
+    public MaxSubArrayContext(MaxSubArrayStrategy strategy) {
         this.strategy = strategy;
     }
     public void setStrategy(MaxSubArrayStrategy strategy) {

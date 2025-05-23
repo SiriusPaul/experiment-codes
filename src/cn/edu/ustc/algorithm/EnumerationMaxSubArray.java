@@ -1,7 +1,7 @@
 package cn.edu.ustc.algorithm;
 
 import cn.edu.ustc.model.MaxSubArrayResult;
-import cn.edu.ustc.service.MaxSubArrayStrategy;
+import cn.edu.ustc.model.MaxSubArrayStrategy;
 
 /**
  * @author SiriusPaul

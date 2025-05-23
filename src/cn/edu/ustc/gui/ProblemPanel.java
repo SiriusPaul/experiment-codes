@@ -5,8 +5,8 @@ import cn.edu.ustc.gui.factory.*;
 import cn.edu.ustc.gui.strategy.*;
 import cn.edu.ustc.model.*;
 //import cn.edu.ustc.service.*;
+import cn.edu.ustc.service.ProblemInfoService;
 import cn.edu.ustc.util.RuntimeCompiler;
-
 
 
 //import cn.edu.ustc.model.StringMatchTestCase;
@@ -14,13 +14,12 @@ import cn.edu.ustc.model.TestCase;
 import cn.edu.ustc.service.AlgorithmCodeService;
 import cn.edu.ustc.model.ProblemType;
 import cn.edu.ustc.service.TestCaseService;
+import javafx.application.Platform;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.control.*;
-import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.VBox;
+import javafx.scene.layout.*;
 
 import java.lang.reflect.Method;
 //import java.sql.SQLException;
@@ -63,9 +62,11 @@ public class ProblemPanel extends BorderPane {
     private Button editButton;
     private Button reloadButton;
     private CheckBox useCustomTestCheckbox;
-    private VBox centerBox;
     private HBox controlBox;
     private VBox topContainer;
+    private VBox centerBox;
+    private Button infoButton;
+    private final ProblemInfoService infoService = new ProblemInfoService();
 
     // 服务类
     private final AlgorithmCodeService codeService = new AlgorithmCodeService();
@@ -75,13 +76,16 @@ public class ProblemPanel extends BorderPane {
     private String currentProblemId;
     private String currentClassName;
     private String originalCode;
-//    private List<TestCase> testCases;
-    private ProblemStrategy currentStrategy;
+    //    private List<TestCase> testCases;
+    private RunProblemStrategy currentStrategy;
 
     // 命令对象
     private final Command runCommand;
     private final Command editCommand;
     private final Command reloadCommand;
+
+    //菜单
+    private MenuBar menuBar;
 
 //    // 新增字符串匹配输入区域
 //    private TextField textField;
@@ -92,7 +96,6 @@ public class ProblemPanel extends BorderPane {
 //    private CheckBox useCustomTestCheckbox;
 //    private TextField customArrayField;
 //    private HBox customMaxSubarrayBox;
-
 
 
     public ProblemPanel() {
@@ -106,6 +109,27 @@ public class ProblemPanel extends BorderPane {
         setupEventHandlers();
     }
 
+    // 初始化菜单
+    private void initMenuBar() {
+        menuBar = new MenuBar();
+
+        //setting menu
+        Menu settingMenu = new Menu("设置");
+        MenuItem exitItem = new MenuItem("退出");
+        exitItem.setOnAction(e -> Platform.exit());
+        settingMenu.getItems().add(exitItem);
+
+        //help menu
+        Menu helpMenu = new Menu("帮助");
+        MenuItem aboutItem = new MenuItem("关于");
+        aboutItem.setOnAction(e -> showAboutDialog());
+        helpMenu.getItems().addAll(aboutItem);
+
+        menuBar.getMenus().addAll(settingMenu, helpMenu);
+        menuBar.setStyle("-fx-background-color: " + UIFactory.PRIMARY_COLOR + ";");
+
+    }
+
     private void initComponents() {
         // 使用工厂创建组件
         algorithmSelector = UIFactory.createComboBox("选择算法", 150);
@@ -113,13 +137,19 @@ public class ProblemPanel extends BorderPane {
         codeArea = UIFactory.createTextArea("-fx-font-family: monospace;", 300, false);
         resultArea = UIFactory.createTextArea(null, 150, false);
 
-        runButton = UIFactory.createButton("编译运行");
+        // 使用不同颜色区分按钮
+        runButton = UIFactory.createRunButton("编译运行");
         editButton = UIFactory.createButton("编辑代码");
         reloadButton = UIFactory.createButton("重新加载");
         reloadButton.setDisable(true);
 
         useCustomTestCheckbox = new CheckBox("自定义测试");
-//        // 初始化所有UI组件
+        useCustomTestCheckbox.setStyle("-fx-text-fill: " + UIFactory.PRIMARY_DARK_COLOR + ";");
+
+        // 问题信息按钮
+        infoButton = UIFactory.createInfoButton();
+        infoButton.setOnAction(e -> showProblemInfo());
+        //        // 初始化所有UI组件
 //        algorithmSelector = new ComboBox<>();
 //        algorithmSelector.setPromptText("选择算法");
 //        algorithmSelector.setPrefWidth(150);
@@ -191,10 +221,10 @@ public class ProblemPanel extends BorderPane {
 //        customArrayField.setPrefWidth(300);
 //        customArrayField.setPrefHeight(25);
 //        // 自定义测试样例组件
-////        useCustomTestCheckbox = new CheckBox("自定义测试");
-////        customArrayField = new TextField();
-////        customArrayField.setPromptText("输入数组，例如：-2,1,-3,4,-1,2,1,-5,4");
-////        customArrayField.setPrefWidth(300);
+//        useCustomTestCheckbox = new CheckBox("自定义测试");
+//        customArrayField = new TextField();
+//        customArrayField.setPromptText("输入数组，例如：-2,1,-3,4,-1,2,1,-5,4");
+//        customArrayField.setPrefWidth(300);
 //
 //        //最大子数组自定义测试区域
 //        customMaxSubarrayBox = new HBox(10);
@@ -203,24 +233,75 @@ public class ProblemPanel extends BorderPane {
 //        customMaxSubarrayBox.getChildren().addAll(new Label("数组:"), customArrayField);
     }
 
+
+    // 显示关于对话框
+    private void showAboutDialog() {
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle("关于");
+        alert.setHeaderText("算法实时运行平台");
+
+        VBox content = new VBox(10);
+        content.setPadding(new Insets(20));
+
+        Label versionLabel = new Label("版本: 1.0.0");
+        Label authorLabel = new Label("作者: SiriusPaul");
+        Label descLabel = new Label("本程序旨在帮助学习和理解各种算法，提供实时的运行环境。");
+        Label webssiteLabel = new Label("GitHub仓库：https://github.com/SiriusPaul/experiment-codes/tree/reflection");
+        descLabel.setWrapText(true);
+
+        content.getChildren().addAll(versionLabel, authorLabel, new Separator(), descLabel,webssiteLabel);
+
+        alert.getDialogPane().setContent(content);
+        alert.showAndWait();
+    }
+
     private void layoutComponents() {
+        // 初始化菜单栏
+        initMenuBar();
+        menuBar.setPrefWidth(Double.MAX_VALUE);
+        menuBar.setMinHeight(25);
+        // 确保菜单栏颜色与页面背景一致
+        menuBar.setStyle("-fx-background-color: #f9f9f9;");
+
         // 控制区域
-        controlBox = UIFactory.createHBox(10, new Insets(10), Pos.CENTER_LEFT,
-                new Label("算法:"), algorithmSelector,
-                new Label("测试:"), testCaseSelector,
-                runButton, editButton, reloadButton);
+        controlBox = UIFactory.createHBox(10, new Insets(15, 15, 5, 15), Pos.CENTER_LEFT,
+                UIFactory.createLabel("算法:"), algorithmSelector,
+                UIFactory.createLabel("测试:"), testCaseSelector,
+                runButton, editButton, reloadButton, infoButton);
+        controlBox.setStyle("-fx-background-color: " + UIFactory.SECONDARY_COLOR + ";" +
+                "-fx-border-color: #e0e0e0;" +
+                "-fx-border-width: 0 0 1 0;");
+
+        // 将菜单栏放在最上方，然后是控制区域
+        topContainer = new VBox();
+        topContainer.getChildren().addAll(menuBar, controlBox);
+
+        // 应用浅灰色背景到文本区域
+        codeArea.setStyle(UIFactory.TEXT_AREA_STYLE);
+        resultArea.setStyle(UIFactory.TEXT_AREA_STYLE);
 
         // 代码和结果区域
-        centerBox = UIFactory.createVBox(10, new Insets(10),
-                new Label("算法代码:"), codeArea,
-                new Label("执行结果:"), resultArea);
+        VBox codeBox = UIFactory.createVBox(5, new Insets(5), UIFactory.createHeaderLabel("算法代码:"), codeArea);
+        codeBox.setStyle("-fx-background-color: white;" +
+                "-fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.1), 3, 0, 0, 1);" +
+                "-fx-background-radius: 4px;");
 
-        // 整体布局
-        topContainer = new VBox(5);
-        topContainer.getChildren().add(controlBox);
+        VBox resultBox = UIFactory.createVBox(5, new Insets(5), UIFactory.createHeaderLabel("执行结果:"), resultArea);
+        resultBox.setStyle("-fx-background-color: white;" +
+                "-fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.1), 3, 0, 0, 1);" +
+                "-fx-background-radius: 4px;");
 
+        // 内容区域
+        centerBox = UIFactory.createVBox(15, new Insets(15), codeBox, resultBox);
+        centerBox.setStyle("-fx-background-color: #f9f9f9;");
+
+        // 设置整体背景
+        setStyle("-fx-background-color: #f9f9f9;");
+
+        // 应用布局
         setTop(topContainer);
         setCenter(centerBox);
+
 
 //        // 布局组件
 //        HBox controlBox = new HBox(10);
@@ -272,25 +353,67 @@ public class ProblemPanel extends BorderPane {
 //        setTop(controlBox);
 //        setCenter(centerBox);
 
-        // 将所有组件添加到主面板
+    // 将所有组件添加到主面板
 //        VBox topContainer = new VBox(5);
 //        topContainer.getChildren().addAll(controlBox, queensOptionsBox,
 //                customMaxSubarrayBox, stringMatchInputBox);
 
 
+    //显示问题信息对话框
+    private void showProblemInfo() {
+        if (currentProblemId == null) {
+            showAlert("请先选择一个问题");
+            return;
+        }
+        try {
+            ProblemInfo info = infoService.getProblemInfo(currentProblemId);
+            if (info == null) {
+                showAlert("无法获取问题信息");
+                return;
+            }
+
+            Dialog<ButtonType> dialog = new Dialog<>();
+            dialog.setTitle("问题详情");
+            dialog.setHeaderText(info.getTitle());
+
+            // 创建内容区域
+            GridPane content = new GridPane();
+            content.setHgap(10);
+            content.setVgap(10);
+            content.setPadding(new Insets(20, 150, 10, 20));
+
+            // 添加描述
+            content.add(UIFactory.createHeaderLabel("描述"), 0, 0);
+            TextArea descriptionArea = UIFactory.createTextArea(null, 100, false);
+            descriptionArea.setText(info.getDescription());
+            descriptionArea.setWrapText(true);
+            GridPane.setHgrow(descriptionArea, Priority.ALWAYS);
+            content.add(descriptionArea, 0, 1);
+            descriptionArea.setPrefHeight(300);
+
+            dialog.getDialogPane().setContent(content);
+            dialog.getDialogPane().getButtonTypes().add(ButtonType.CLOSE);
+            dialog.getDialogPane().setPrefSize(600, 500);
+
+            dialog.showAndWait();
+
+        } catch (Exception e) {
+            showAlert("加载问题信息失败: " + e.getMessage());
+        }
+    }
+
     // 设置事件处理器
     private void setupEventHandlers() {
-            algorithmSelector.setOnAction(e -> loadSelectedAlgorithmCode());
-            testCaseSelector.setOnAction(e -> {
-                if (currentStrategy != null) {
-                    currentStrategy.loadTestCaseInputs();
-                }
-            });
-            runButton.setOnAction(e -> runCommand.execute());
-            editButton.setOnAction(e -> editCommand.execute());
-            reloadButton.setOnAction(e -> reloadCommand.execute());
-            useCustomTestCheckbox.setOnAction(e ->
-                    testCaseSelector.setDisable(useCustomTestCheckbox.isSelected()));
+        algorithmSelector.setOnAction(e -> loadSelectedAlgorithmCode());
+        testCaseSelector.setOnAction(e -> {
+            if (currentStrategy != null) {
+                currentStrategy.loadTestCaseInputs();
+            }
+        });
+        runButton.setOnAction(e -> runCommand.execute());
+        editButton.setOnAction(e -> editCommand.execute());
+        reloadButton.setOnAction(e -> reloadCommand.execute());
+        useCustomTestCheckbox.setOnAction(e -> testCaseSelector.setDisable(useCustomTestCheckbox.isSelected()));
 
 //        // 设置事件处理
 //        algorithmSelector.setOnAction(e -> loadSelectedAlgorithmCode());
@@ -341,9 +464,8 @@ public class ProblemPanel extends BorderPane {
         currentStrategy = StrategyFactory.createStrategy(problem, this, testCaseService);
 
         // 更新UI
-        topContainer.getChildren().clear();
-        topContainer.getChildren().add(controlBox);
-
+        // 保留菜单栏，只清除策略相关控件
+        topContainer.getChildren().removeAll(topContainer.getChildren().filtered(node -> !node.equals(menuBar) && !node.equals(controlBox)));
         // 添加策略特定的控件
         List<Node> problemControls = currentStrategy.createProblemControls();
         topContainer.getChildren().addAll(problemControls);
@@ -353,8 +475,7 @@ public class ProblemPanel extends BorderPane {
         currentStrategy.loadTestCases(currentProblemId);
 
         // 更新组件可见性
-        boolean isQueens = "queens".equals(problem.getId()) ||
-                "八皇后问题".equals(problem.getDisplayName());
+        boolean isQueens = "queens".equals(problem.getId()) || "八皇后问题".equals(problem.getDisplayName());
         testCaseSelector.setVisible(!isQueens);
 
         // 重置状态
@@ -429,7 +550,7 @@ public class ProblemPanel extends BorderPane {
             algorithmSelector.getItems().clear();
             algorithmSelector.getItems().addAll(codeService.getAlgorithmNames(currentProblemId));
             if (!algorithmSelector.getItems().isEmpty()) {
-                algorithmSelector.setValue(algorithmSelector.getItems().get(0));
+                algorithmSelector.setValue(algorithmSelector.getItems().getFirst());
                 loadSelectedAlgorithmCode();
             }
         } catch (Exception e) {
@@ -479,7 +600,9 @@ public class ProblemPanel extends BorderPane {
 
     private void loadSelectedAlgorithmCode() {
         String selectedAlgo = algorithmSelector.getValue();
-        if (selectedAlgo == null) return;
+        if (selectedAlgo == null) {
+            return;
+        }
 
         try {
             String code = codeService.getCode(currentProblemId, selectedAlgo);
@@ -520,16 +643,16 @@ public class ProblemPanel extends BorderPane {
     }
 
 
-    private void loadTestCaseInputs() {
-        // 委托给当前策略处理
-        if (currentStrategy != null) {
-            try {
-                currentStrategy.loadTestCases(currentProblemId);
-            } catch (Exception e) {
-                showAlert("加载测试用例失败: " + e.getMessage());
-            }
-        }
-    }
+//    private void loadTestCaseInputs() {
+//        // 委托给当前策略处理
+//        if (currentStrategy != null) {
+//            try {
+//                currentStrategy.loadTestCases(currentProblemId);
+//            } catch (Exception e) {
+//                showAlert("加载测试用例失败: " + e.getMessage());
+//            }
+//        }
+//    }
 
     // 运行问题
     public void runProblem() {
@@ -618,7 +741,6 @@ public class ProblemPanel extends BorderPane {
     }
 
 
-
     // 提取类名，确保处理public修饰符
 //    private String extractClassName(String sourceCode) {
 //        java.util.regex.Pattern pattern = java.util.regex.Pattern.compile("(public\\s+)?class\\s+(\\w+)");
@@ -630,9 +752,7 @@ public class ProblemPanel extends BorderPane {
 //    }
 
     // 编译并运行代码
-    public void compileAndRunCode(Object arg1, Object arg2, String methodName,
-                                  Class<?> arg1Type, Class<?> arg2Type,
-                                  String expectedReturnType) throws Exception {
+    public void compileAndRunCode(Object arg1, Object arg2, String methodName, Class<?> arg1Type, Class<?> arg2Type, String expectedReturnType) throws Exception {
         // 创建唯一类名
         String sourceCode = codeArea.getText();
         String actualClassName = extractClassName(sourceCode);
@@ -640,10 +760,7 @@ public class ProblemPanel extends BorderPane {
         String fullClassName = "cn.edu.ustc.algorithm." + uniqueClassName;
 
         // 修改源代码中的类名
-        String modifiedSourceCode = sourceCode.replaceFirst(
-                "(public\\s+)?class\\s+" + actualClassName + "\\b",
-                "public class " + uniqueClassName
-        );
+        String modifiedSourceCode = sourceCode.replaceFirst("(public\\s+)?class\\s+" + actualClassName + "\\b", "public class " + uniqueClassName);
 
         // 编译代码
         Class<?> compiledClass = RuntimeCompiler.compileAndLoad(fullClassName, modifiedSourceCode);
@@ -659,7 +776,7 @@ public class ProblemPanel extends BorderPane {
 
             if (result != null && "cn.edu.ustc.model.StringMatchResult".equals(expectedReturnType)) {
                 StringMatchResult matchResult = (StringMatchResult) result;
-                if (currentStrategy instanceof StringMatchStrategy strStrategy) {
+                if (currentStrategy instanceof RunStringMatchStrategy strStrategy) {
                     strStrategy.displayResult((String) arg1, (String) arg2, matchResult);
                 }
             }
@@ -667,9 +784,9 @@ public class ProblemPanel extends BorderPane {
             method = compiledClass.getMethod(methodName, arg1Type);
             result = method.invoke(instance, arg1);
 
-            if (arg1 instanceof int[] && currentStrategy instanceof MaxSubarrayStrategy maxStrategy) {
+            if (arg1 instanceof int[] intArg && currentStrategy instanceof RunMaxSubArrayStrategy maxStrategy) {
                 int numericResult = extractNumericResult(result);
-                maxStrategy.displayResult((int[]) arg1, numericResult);
+                maxStrategy.displayResult(intArg, numericResult);
             }
         }
 
@@ -980,10 +1097,24 @@ public class ProblemPanel extends BorderPane {
     }
 
     // Getters
-    public TextArea getCodeArea() { return codeArea; }
-    public TextArea getResultArea() { return resultArea; }
-    public ComboBox<String> getAlgorithmSelector() { return algorithmSelector; }
-    public ComboBox<TestCase> getTestCaseSelector() { return testCaseSelector; }
-    public CheckBox getUseCustomTestCheckbox() { return useCustomTestCheckbox; }
+    public TextArea getCodeArea() {
+        return codeArea;
+    }
+
+    public TextArea getResultArea() {
+        return resultArea;
+    }
+
+    public ComboBox<String> getAlgorithmSelector() {
+        return algorithmSelector;
+    }
+
+    public ComboBox<TestCase> getTestCaseSelector() {
+        return testCaseSelector;
+    }
+
+    public CheckBox getUseCustomTestCheckbox() {
+        return useCustomTestCheckbox;
+    }
 
 }

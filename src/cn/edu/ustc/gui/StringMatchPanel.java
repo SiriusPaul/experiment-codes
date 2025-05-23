@@ -1,7 +1,7 @@
 package cn.edu.ustc.gui;
 
 import cn.edu.ustc.algorithm.BoyerMooreStringMatcher;
-import cn.edu.ustc.algorithm.EnumerationStringMatcher;
+import cn.edu.ustc.algorithm.BruteForceStringMatcher;
 import cn.edu.ustc.algorithm.KMPStringMatcher;
 import cn.edu.ustc.model.StringMatchResult;
 import cn.edu.ustc.util.AlgorithmTimer;
@@ -62,7 +62,7 @@ public class StringMatchPanel extends VBox {
         StringBuilder results = new StringBuilder("字符串匹配结果：\n\n");
 
         // 运行枚举算法
-        EnumerationStringMatcher enumMatcher = new EnumerationStringMatcher();
+        BruteForceStringMatcher enumMatcher = new BruteForceStringMatcher();
         AlgorithmTimer.TimingResult<StringMatchResult> enumResult =
                 AlgorithmTimer.measure(() -> enumMatcher.calc(text, pattern));
 

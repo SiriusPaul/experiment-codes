@@ -19,13 +19,13 @@ import java.util.List;
  * @CreateDate 2025/5/21
  * @Description 八皇后问题策略
  */
-public class QueensStrategy implements ProblemStrategy {
+public class RunQueensStrategy implements RunProblemStrategy {
     private final ProblemPanel panel;
     private final TestCaseService testCaseService;
     private final Spinner<Integer> boardSizeSpinner;
     private final HBox queensOptionsBox;
 
-    public QueensStrategy(ProblemPanel panel, TestCaseService testCaseService) {
+    public RunQueensStrategy(ProblemPanel panel, TestCaseService testCaseService) {
         this.panel = panel;
         this.testCaseService = testCaseService;
 
