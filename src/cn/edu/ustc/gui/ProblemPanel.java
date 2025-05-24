@@ -64,7 +64,6 @@ public class ProblemPanel extends BorderPane {
     private CheckBox useCustomTestCheckbox;
     private HBox controlBox;
     private VBox topContainer;
-    private VBox centerBox;
     private Button infoButton;
     private final ProblemInfoService infoService = new ProblemInfoService();
 
@@ -249,19 +248,20 @@ public class ProblemPanel extends BorderPane {
         Label webssiteLabel = new Label("GitHub仓库：https://github.com/SiriusPaul/experiment-codes/tree/reflection");
         descLabel.setWrapText(true);
 
-        content.getChildren().addAll(versionLabel, authorLabel, new Separator(), descLabel,webssiteLabel);
+        content.getChildren().addAll(versionLabel, authorLabel, new Separator(), descLabel, webssiteLabel);
 
         alert.getDialogPane().setContent(content);
         alert.showAndWait();
     }
 
     private void layoutComponents() {
+        VBox centerBox;
         // 初始化菜单栏
         initMenuBar();
         menuBar.setPrefWidth(Double.MAX_VALUE);
         menuBar.setMinHeight(25);
         // 确保菜单栏颜色与页面背景一致
-        menuBar.setStyle("-fx-background-color: #f9f9f9;");
+        menuBar.setStyle(UIFactory.BASIC_COLOUR);
 
         // 控制区域
         controlBox = UIFactory.createHBox(10, new Insets(15, 15, 5, 15), Pos.CENTER_LEFT,
@@ -293,10 +293,10 @@ public class ProblemPanel extends BorderPane {
 
         // 内容区域
         centerBox = UIFactory.createVBox(15, new Insets(15), codeBox, resultBox);
-        centerBox.setStyle("-fx-background-color: #f9f9f9;");
+        centerBox.setStyle(UIFactory.BASIC_COLOUR);
 
         // 设置整体背景
-        setStyle("-fx-background-color: #f9f9f9;");
+        setStyle(UIFactory.BASIC_COLOUR);
 
         // 应用布局
         setTop(topContainer);
@@ -676,7 +676,6 @@ public class ProblemPanel extends BorderPane {
             resultArea.appendText("\n\n执行时间: " + String.format("%.3f 毫秒", executionTimeMs));
         } catch (Exception e) {
             resultArea.setText("执行错误: " + e.getMessage());
-            e.printStackTrace();
         }
 //        long executionStartTime = System.nanoTime();
 //        resultArea.setText("正在编译...");

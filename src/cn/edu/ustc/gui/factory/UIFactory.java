@@ -22,6 +22,7 @@ public class UIFactory {
     public static final String SUCCESS_COLOR = "#4CAF50";
     public static final String WARNING_COLOR = "#FFC107";
     public static final String ERROR_COLOR = "#F44336";
+    public static final String BASIC_COLOUR = "-fx-background-color: #f9f9f9;";
 
     public static final String BUTTON_STYLE =
             "-fx-background-color: " + PRIMARY_COLOR + ";" +
