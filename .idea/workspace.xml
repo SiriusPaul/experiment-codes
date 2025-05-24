@@ -7,9 +7,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="801b9ca9-dfd1-4a38-8717-d8386e05d69d" name="更改" comment="美化了UI界面，添加了问题详情和菜单栏，完善了problem panel">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-    </list>
+    <list default="true" id="801b9ca9-dfd1-4a38-8717-d8386e05d69d" name="更改" comment="优化了一些代码，减少了警告。" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -43,6 +41,9 @@
     &quot;accountId&quot;: &quot;1dc9fc94-1fc9-4b69-93fd-9ba20620e237&quot;
   }
 }</component>
+  <component name="ProblemsViewState">
+    <option name="selectedTabId" value="CurrentFile" />
+  </component>
   <component name="ProjectColorInfo">{
   &quot;associatedIndex&quot;: 8
 }</component>
@@ -173,7 +174,7 @@
       <workItem from="1747477636158" duration="8975000" />
       <workItem from="1747629327906" duration="611000" />
       <workItem from="1747662021866" duration="45069000" />
-      <workItem from="1747880575716" duration="44883000" />
+      <workItem from="1747880575716" duration="47121000" />
     </task>
     <task id="LOCAL-00001" summary="第一次实验课，完整可运行代码">
       <option name="closed" value="true" />
@@ -231,7 +232,15 @@
       <option name="project" value="LOCAL" />
       <updated>1748014628696</updated>
     </task>
-    <option name="localTasksCounter" value="8" />
+    <task id="LOCAL-00008" summary="优化了一些代码，减少了警告。">
+      <option name="closed" value="true" />
+      <created>1748065114170</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1748065114170</updated>
+    </task>
+    <option name="localTasksCounter" value="9" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -314,7 +323,8 @@
     <MESSAGE value="添加了字符串匹配问题的算法、接口和结果，重构了problem panel，把运行组件独立为方法。添加了最大子数组问题和字符串匹配问题的自定义测试样例输入。TODO:优化自定义测试样例的UI，优化problem panel的冗余代码，使用设计模式重构代码。美化UI，添加说明组件。" />
     <MESSAGE value="将程序按照策略工厂模式和命令模式的思路进行了重构，主要封装了运行各个问题的策略，将方法从problemPanel中提取出来，使其变得简洁，且易拓展。优化了自定义测试的结果显示，这样在自定义运行的情况下不会显示是否正确运行。TODO:优化UI，增加提示组件。" />
     <MESSAGE value="美化了UI界面，添加了问题详情和菜单栏，完善了problem panel" />
-    <option name="LAST_COMMIT_MESSAGE" value="美化了UI界面，添加了问题详情和菜单栏，完善了problem panel" />
+    <MESSAGE value="优化了一些代码，减少了警告。" />
+    <option name="LAST_COMMIT_MESSAGE" value="优化了一些代码，减少了警告。" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
