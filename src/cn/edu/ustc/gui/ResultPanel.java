@@ -24,14 +24,30 @@ public class ResultPanel extends VBox {
         setPadding(new Insets(10));
         setSpacing(10);
 
-        titleLabel = new Label("执行结果");
-        titleLabel.setFont(Font.font("System", FontWeight.BOLD, 14));
+        titleLabel = getTitleLabel();
 
+        resultArea = getTextArea();
+
+        extracted();
+    }
+
+    private void extracted() {
+        getChildren().addAll(titleLabel, resultArea);
+    }
+
+    private TextArea getTextArea() {
+        final TextArea resultArea;
         resultArea = new TextArea();
         resultArea.setEditable(false);
         resultArea.setPrefRowCount(5);
+        return resultArea;
+    }
 
-        getChildren().addAll(titleLabel, resultArea);
+    private Label getTitleLabel() {
+        final Label titleLabel;
+        titleLabel = new Label("执行结果");
+        titleLabel.setFont(Font.font("System", FontWeight.BOLD, 14));
+        return titleLabel;
     }
 
     public void showResult(String... lines) {
