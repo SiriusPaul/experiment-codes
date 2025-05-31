@@ -12,5 +12,4 @@ import java.sql.SQLException;
  */
 public interface ProblemInfoDAO {
     ProblemInfo findById(String problemId) throws SQLException;
-
 }
