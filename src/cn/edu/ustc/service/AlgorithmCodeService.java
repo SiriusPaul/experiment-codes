@@ -1,5 +1,8 @@
 package cn.edu.ustc.service;
 
+import cn.edu.ustc.dao.AlgorithmCodeDAO;
+import cn.edu.ustc.dao.impl.AlgorithmCodeDAOImpl;
+import cn.edu.ustc.exception.GlobalExceptionHandler;
 import cn.edu.ustc.util.DatabaseManager;
 
 import java.sql.Connection;
@@ -16,60 +19,41 @@ import java.util.List;
  * @Description 根据题目id从数据库中获取算法代码，算法名称，类名等信息
  */
 public class AlgorithmCodeService {
+    private final AlgorithmCodeDAO algorithmCodeDAO;
+
+    public AlgorithmCodeService() {
+        this.algorithmCodeDAO = new AlgorithmCodeDAOImpl();
+    }
+
+    // 用于测试或依赖注入
+    public AlgorithmCodeService(AlgorithmCodeDAO algorithmCodeDAO) {
+        this.algorithmCodeDAO = algorithmCodeDAO;
+    }
+
     // 获取算法名称列表
-    public List<String> getAlgorithmNames(String problemId) throws SQLException {
-        String sql = "SELECT algorithm_name FROM algorithm_code WHERE problem_id = ?";
-        List<String> names = new ArrayList<>();
-
-        try (Connection conn = DatabaseManager.getConnection();
-             PreparedStatement stmt = conn.prepareStatement(sql)) {
-
-            stmt.setString(1, problemId);
-            ResultSet rs = stmt.executeQuery();
-
-            while (rs.next()) {
-                names.add(rs.getString("algorithm_name"));
-            }
+    public List<String> getAlgorithmNames(String problemId) {
+        try {
+            return algorithmCodeDAO.findAlgorithmNamesByProblemId(problemId);
+        } catch (SQLException ex) {
+            throw GlobalExceptionHandler.convertToRuntime(ex, "获取算法名称列表失败: " + problemId);
         }
-
-        return names;
     }
 
     // 获取算法代码
-    public String getCode(String problemId, String algorithmName) throws SQLException {
-        String sql = "SELECT source_code FROM algorithm_code WHERE problem_id = ? AND algorithm_name = ?";
-
-        try (Connection conn = DatabaseManager.getConnection();
-             PreparedStatement stmt = conn.prepareStatement(sql)) {
-
-            stmt.setString(1, problemId);
-            stmt.setString(2, algorithmName);
-
-            ResultSet rs = stmt.executeQuery();
-            if (rs.next()) {
-                return rs.getString("source_code");
-            }
+    public String getCode(String problemId, String algorithmName) {
+        try {
+            return algorithmCodeDAO.findCodeByProblemIdAndAlgorithmName(problemId, algorithmName);
+        } catch (SQLException ex) {
+            throw GlobalExceptionHandler.convertToRuntime(ex, "获取算法代码失败: " + problemId + ", " + algorithmName);
         }
-
-        return null;
     }
 
     // 获取类名
-    public String getClassName(String problemId, String algorithmName) throws SQLException {
-        String sql = "SELECT class_name FROM algorithm_code WHERE problem_id = ? AND algorithm_name = ?";
-
-        try (Connection conn = DatabaseManager.getConnection();
-             PreparedStatement stmt = conn.prepareStatement(sql)) {
-
-            stmt.setString(1, problemId);
-            stmt.setString(2, algorithmName);
-
-            ResultSet rs = stmt.executeQuery();
-            if (rs.next()) {
-                return rs.getString("class_name");
-            }
+    public String getClassName(String problemId, String algorithmName) {
+        try {
+            return algorithmCodeDAO.findClassNameByProblemIdAndAlgorithmName(problemId, algorithmName);
+        } catch (SQLException ex) {
+            throw GlobalExceptionHandler.convertToRuntime(ex, "获取类名失败: " + problemId + ", " + algorithmName);
         }
-
-        return algorithmName.replaceAll("\\s+", "") + "Algorithm";
     }
 }

@@ -1,5 +1,8 @@
 package cn.edu.ustc.service;
 
+import cn.edu.ustc.dao.ProblemInfoDAO;
+import cn.edu.ustc.dao.impl.ProblemInfoDAOImpl;
+import cn.edu.ustc.exception.GlobalExceptionHandler;
 import cn.edu.ustc.model.ProblemInfo;
 import cn.edu.ustc.util.DatabaseManager;
 
@@ -15,24 +18,22 @@ import java.sql.SQLException;
  * @Description
  */
 public class ProblemInfoService {
-    public ProblemInfo getProblemInfo(String problemId) throws SQLException {
-        String sql = "SELECT title, description FROM problems WHERE id = ?";
+    private final ProblemInfoDAO problemInfoDAO;
 
-        try (Connection conn = DatabaseManager.getConnection();
-             PreparedStatement stmt = conn.prepareStatement(sql)) {
+    public ProblemInfoService() {
+        this.problemInfoDAO = new ProblemInfoDAOImpl();
+    }
 
-            stmt.setString(1, problemId);
+    // 用于测试或依赖注入
+    public ProblemInfoService(ProblemInfoDAO problemInfoDAO) {
+        this.problemInfoDAO = problemInfoDAO;
+    }
 
-            try (ResultSet rs = stmt.executeQuery()) {
-                if (rs.next()) {
-                    return new ProblemInfo(
-//                            problemId,
-                            rs.getString("title"),
-                            rs.getString("description")                                                );
-                }
-            }
+    public ProblemInfo getProblemInfo(String problemId) {
+        try {
+            return problemInfoDAO.findById(problemId);
+        } catch (SQLException ex) {
+            throw GlobalExceptionHandler.convertToRuntime(ex, "获取问题信息失败: " + problemId);
         }
-
-        return null;
     }
 }
