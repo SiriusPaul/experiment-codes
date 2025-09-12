@@ -1,0 +1,281 @@
+@startuml
+top to bottom direction
+skinparam packageStyle rectangle
+skinparam nodesep 10
+skinparam ranksep 15
+skinparam packageTitleAlignment center
+
+' DAO & Impl & Service
+together {
+  package "cn.edu.ustc.dao" as DAO {
+    interface AlgorithmCodeDAO {
+      +List<String> findAlgorithmNamesByProblemId(String)
+      +String findCodeByProblemIdAndAlgorithmName(String, String)
+      +String findClassNameByProblemIdAndAlgorithmName(String, String)
+    }
+
+    interface TestCaseDAO {
+      +List<TestCase> findByProblemId(String)
+    }
+
+    interface ProblemInfoDAO {
+      +ProblemInfo findById(String)
+    }
+  }
+
+  package "cn.edu.ustc.dao.impl" as DAOImpl {
+    class AlgorithmCodeDAOImpl {
+      +List<String> findAlgorithmNamesByProblemId(String)
+      +String findCodeByProblemIdAndAlgorithmName(String, String)
+      +String findClassNameByProblemIdAndAlgorithmName(String, String)
+    }
+
+    class TestCaseDAOImpl {
+      +List<TestCase> findByProblemId(String)
+    }
+
+    class ProblemInfoDAOImpl {
+      +ProblemInfo findById(String)
+    }
+
+    AlgorithmCodeDAOImpl -up-|> AlgorithmCodeDAO
+    TestCaseDAOImpl -up-|> TestCaseDAO
+    ProblemInfoDAOImpl -up-|> ProblemInfoDAO
+  }
+
+  package "cn.edu.ustc.service" as Service {
+    class AlgorithmCodeService {
+      -AlgorithmCodeDAO algorithmCodeDAO
+      +List<String> getAlgorithmNames(String)
+      +String getCode(String, String)
+      +String getClassName(String, String)
+    }
+
+    class TestCaseService {
+      -TestCaseDAO testCaseDAO
+      +List<TestCase> getTestCases(String)
+    }
+
+    class ProblemInfoService {
+      -ProblemInfoDAO problemInfoDAO
+      +ProblemInfo getProblemInfo(String)
+    }
+
+    interface QueensStrategy {
+      +QueensSolutionResult solve(int)
+    }
+
+    AlgorithmCodeService -up-> AlgorithmCodeDAO
+    TestCaseService -up-> TestCaseDAO
+    ProblemInfoService -up-> ProblemInfoDAO
+  }
+}
+
+' Model
+package "cn.edu.ustc.model" as Model {
+  class TestCase {
+    -int id
+    -String problemId
+    -String name
+    -String inputData
+    -String expectedOutput
+    +int[] getInputArray()
+  }
+
+  class StringMatchTestCase {
+    -String text
+    -String pattern
+  }
+
+  class ProblemInfo {
+    -String id
+    -String name
+    -String description
+    -ProblemType type
+  }
+
+  enum ProblemType {
+    MAX_SUBARRAY
+    STRING_MATCH
+    QUEENS
+  }
+
+  class MaxSubArrayResult {
+    -int maxSum
+    -int startIdx
+    -int endIdx
+  }
+
+  class StringMatchResult {
+    -List<Integer> positions
+  }
+
+  class QueensSolutionResult {
+    -int[][] solutions
+  }
+
+  StringMatchTestCase -up-|> TestCase
+}
+
+' Strategy
+package "cn.edu.ustc.model.strategy" as Strategy {
+  interface MaxSubArrayStrategy {
+    +MaxSubArrayResult calc(int[])
+  }
+
+  interface StringMatcherStrategy {
+    +StringMatchResult calc(String, String)
+  }
+
+  class MaxSubArrayContext {
+    -MaxSubArrayStrategy strategy
+    +MaxSubArrayResult executeStrategy(int[])
+  }
+
+  MaxSubArrayContext -up-> MaxSubArrayStrategy
+}
+
+' GUI
+package "cn.edu.ustc.gui" as GUI {
+  class ProblemPanel {
+    -AlgorithmCodeService codeService
+    -TestCaseService testCaseService
+    -ProblemInfoService infoService
+    -RunProblemStrategy currentStrategy
+    +void switchProblem(ProblemType)
+    +void runProblem()
+    +void compileAndRunCode(Object, Object, String, Class<?>, Class<?>, String)
+  }
+
+  ProblemPanel -up-> AlgorithmCodeService
+  ProblemPanel -up-> TestCaseService
+  ProblemPanel -up-> ProblemInfoService
+  ProblemPanel -up-> RunProblemStrategy
+  ProblemPanel -up-> Command
+}
+
+package "cn.edu.ustc.gui.command" as CommandPkg {
+  interface Command {
+    +void execute()
+  }
+
+  class RunCommand {
+    -ProblemPanel panel
+    +void execute()
+  }
+
+  class EditCodeCommand {
+    -ProblemPanel panel
+    -String code
+    +void execute()
+  }
+
+  class ReloadCodeCommand {
+    -ProblemPanel panel
+    +void execute()
+  }
+
+  RunCommand -up-|> Command
+  EditCodeCommand -up-|> Command
+  ReloadCodeCommand -up-|> Command
+}
+
+package "cn.edu.ustc.gui.strategy" as GuiStrategy {
+  interface RunProblemStrategy {
+    +void loadTestCases(String problemId)
+    +List<Node> createProblemControls()
+    +void execute()
+    +void prepareUI(boolean visible)
+    +void loadTestCaseInputs()
+    +void displayBasicResult(Object, Object, StringBuilder)
+    +void verifyResult(Object, TestCase, StringBuilder)
+  }
+
+  class RunMaxSubArrayStrategy {
+    -TestCaseService testCaseService
+    -List<TestCase> testCases
+    +void execute()
+  }
+
+  class RunQueensStrategy {
+    -TestCaseService testCaseService
+    -List<TestCase> testCases
+    +void execute()
+  }
+
+  class RunStringMatchStrategy {
+    -TestCaseService testCaseService
+    -List<TestCase> testCases
+    +void execute()
+  }
+
+  RunMaxSubArrayStrategy -up-|> RunProblemStrategy
+  RunQueensStrategy -up-|> RunProblemStrategy
+  RunStringMatchStrategy -up-|> RunProblemStrategy
+}
+
+package "cn.edu.ustc.gui.factory" as Factory {
+  class UIFactory {
+    +Node createLabel(String text)
+    +Node createButton(String text)
+  }
+
+  class StrategyFactory {
+    +RunProblemStrategy createStrategy(ProblemType type)
+  }
+
+  StrategyFactory -up-> RunProblemStrategy
+}
+
+' Algorithm implementations
+package "cn.edu.ustc.algorithm" as Algo {
+  class DynamicProgrammingMaxSubArray {
+    +MaxSubArrayResult calc(int[])
+  }
+
+  class EnumerationMaxSubArray {
+    +MaxSubArrayResult calc(int[])
+  }
+
+  class KMPStringMatcher {
+    +StringMatchResult calc(String, String)
+  }
+
+  class BacktrackingQueens {
+    +QueensSolutionResult solve(int)
+  }
+
+  DynamicProgrammingMaxSubArray -up-|> MaxSubArrayStrategy
+  EnumerationMaxSubArray -up-|> MaxSubArrayStrategy
+  KMPStringMatcher -up-|> StringMatcherStrategy
+  BacktrackingQueens -up-|> QueensStrategy
+}
+
+' Utility
+package "cn.edu.ustc.util" as Util {
+  class DatabaseManager {
+    +{static} Connection getConnection()
+    +{static} void closeConnection()
+  }
+
+  class RuntimeCompiler {
+    +Class<?> compile(String className, String sourceCode)
+    +Object newInstance(Class<?> clazz)
+  }
+}
+
+package "cn.edu.ustc.exception" as ExceptionPkg {
+  class GlobalExceptionHandler {
+    +{static} void handleDatabaseException(SQLException, String)
+    +{static} RuntimeException convertToRuntime(Exception, String)
+    +{static} void handleException(Exception, String)
+  }
+}
+
+' Utility connections
+AlgorithmCodeDAOImpl -up-> DatabaseManager
+TestCaseDAOImpl -up-> DatabaseManager
+ProblemInfoDAOImpl -up-> DatabaseManager
+AlgorithmCodeDAOImpl -up-> GlobalExceptionHandler
+TestCaseDAOImpl -up-> GlobalExceptionHandler
+@enduml
