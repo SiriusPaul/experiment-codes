@@ -1,4 +1,4 @@
-# Experiment Codes
+# Algorithm Explorer
 
 ## 项目描述 (Project Description)
 
@@ -70,3 +70,123 @@ experiment-codes/
 This project is licensed under the MIT License. See the LICENSE file for details.
 
 此项目根据MIT许可证授权。有关详细信息，请参阅LICENSE文件。
+
+---
+
+## 数据库结构 (Database Schema)
+
+The database schema for this project is designed to store algorithm codes, problem information, and test cases. Below is the structure of the main tables:
+
+### 1. `algorithm_codes`
+- **Description**: Stores the source code for different algorithms.
+- **Columns**:
+  - `id` (INT, PRIMARY KEY, AUTO_INCREMENT): Unique identifier for the algorithm.
+  - `name` (VARCHAR(255)): Name of the algorithm.
+  - `code` (TEXT): Source code of the algorithm.
+  - `created_at` (DATETIME): Timestamp of when the record was created.
+
+### 2. `problems`
+- **Description**: Stores information about different problems.
+- **Columns**:
+  - `id` (INT, PRIMARY KEY, AUTO_INCREMENT): Unique identifier for the problem.
+  - `type` (VARCHAR(255)): Type of the problem (e.g., String Matching, Max Subarray).
+  - `description` (TEXT): Description of the problem.
+  - `created_at` (DATETIME): Timestamp of when the record was created.
+
+### 3. `test_cases`
+- **Description**: Stores test cases for the problems.
+- **Columns**:
+  - `id` (INT, PRIMARY KEY, AUTO_INCREMENT): Unique identifier for the test case.
+  - `problem_id` (INT, FOREIGN KEY): References the `id` column in the `problems` table.
+  - `input` (TEXT): Input data for the test case.
+  - `expected_output` (TEXT): Expected output for the test case.
+  - `created_at` (DATETIME): Timestamp of when the record was created.
+
+### Relationships
+- The `test_cases` table has a foreign key relationship with the `problems` table, linking test cases to their respective problems.
+
+### Example SQL Script
+Below is an example SQL script to create the database schema:
+
+```sql
+CREATE TABLE algorithm_codes (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    name VARCHAR(255) NOT NULL,
+    code TEXT NOT NULL,
+    created_at DATETIME DEFAULT CURRENT_TIMESTAMP
+);
+
+CREATE TABLE problems (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    type VARCHAR(255) NOT NULL,
+    description TEXT NOT NULL,
+    created_at DATETIME DEFAULT CURRENT_TIMESTAMP
+);
+
+CREATE TABLE test_cases (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    problem_id INT NOT NULL,
+    input TEXT NOT NULL,
+    expected_output TEXT NOT NULL,
+    created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (problem_id) REFERENCES problems(id)
+);
+```
+
+此项目的数据库模式设计用于存储算法代码、问题信息和测试用例。以下是主要表的结构：
+
+### 1. `algorithm_codes`
+- **描述**: 存储不同算法的源代码。
+- **字段**:
+  - `id` (INT, PRIMARY KEY, AUTO_INCREMENT): 算法的唯一标识符。
+  - `name` (VARCHAR(255)): 算法名称。
+  - `code` (TEXT): 算法的源代码。
+  - `created_at` (DATETIME): 记录创建的时间戳。
+
+### 2. `problems`
+- **描述**: 存储不同问题的信息。
+- **字段**:
+  - `id` (INT, PRIMARY KEY, AUTO_INCREMENT): 问题的唯一标识符。
+  - `type` (VARCHAR(255)): 问题类型（例如，字符串匹配、最大子数组）。
+  - `description` (TEXT): 问题的描述。
+  - `created_at` (DATETIME): 记录创建的时间戳。
+
+### 3. `test_cases`
+- **描述**: 存储问题的测试用例。
+- **字段**:
+  - `id` (INT, PRIMARY KEY, AUTO_INCREMENT): 测试用例的唯一标识符。
+  - `problem_id` (INT, FOREIGN KEY): 引用 `problems` 表中的 `id` 字段。
+  - `input` (TEXT): 测试用例的输入数据。
+  - `expected_output` (TEXT): 测试用例的预期输出。
+  - `created_at` (DATETIME): 记录创建的时间戳。
+
+### 关系
+- `test_cases` 表与 `problems` 表通过外键建立关系，将测试用例与其对应的问题关联起来。
+
+### 示例 SQL 脚本
+以下是创建数据库模式的示例 SQL 脚本：
+
+```sql
+CREATE TABLE algorithm_codes (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    name VARCHAR(255) NOT NULL,
+    code TEXT NOT NULL,
+    created_at DATETIME DEFAULT CURRENT_TIMESTAMP
+);
+
+CREATE TABLE problems (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    type VARCHAR(255) NOT NULL,
+    description TEXT NOT NULL,
+    created_at DATETIME DEFAULT CURRENT_TIMESTAMP
+);
+
+CREATE TABLE test_cases (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    problem_id INT NOT NULL,
+    input TEXT NOT NULL,
+    expected_output TEXT NOT NULL,
+    created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (problem_id) REFERENCES problems(id)
+);
+```
